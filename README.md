@@ -10,8 +10,10 @@ Prototipo de gestión de salud familiar para iPhone, desarrollado como proyecto 
 
 ## Probar
 
+**[Abrir el prototipo en iPhone](https://nido-prototipo-iphone.vercel.app)**
+
 Desde la raíz del repositorio: `python3 -m http.server 8000 --directory prototype/public`. Abrir `http://localhost:8000`.
 
-Para Vercel: importar este repositorio, elegir **Other**, usar **Root Directory: prototype** y **Output Directory: public**, sin comandos de instalación ni compilación. El enlace público queda pendiente de confirmar el despliegue.
+Para Vercel: importar este repositorio, elegir **Other**, usar **Root Directory: prototype** y **Output Directory: public**, sin comandos de instalación ni compilación. El proyecto `nido-prototipo-iphone` está conectado a `main`; los nuevos commits generan despliegues automáticamente.
 
 Es una demostración con datos ficticios. Las funciones de IA, reservas, compras y avisos externos están simuladas; los cambios se pierden al recargar. El rediseño completo está pendiente.

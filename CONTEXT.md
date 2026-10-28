@@ -114,16 +114,16 @@ Criterios de aceptación: sin desbordamiento horizontal en iPhone; eventos edita
 ## Operación y publicación
 
 Repositorio: `https://github.com/JuanCortabarria/VaPrototipo_Nido`, rama actual `main`.
-Equipo Vercel: `juancortabarrias-projects` (`team_WohC5HtK35faU6BdNXiUqbpU`). Acceso del conector confirmado en esta sesión. En el listado consultado no figura aún un proyecto de Nido. Proyecto propuesto: `nido-prototipo-iphone`, separado de otros sitios.
+Equipo Vercel: `juancortabarrias-projects` (`team_WohC5HtK35faU6BdNXiUqbpU`). Acceso del conector confirmado en esta sesión. Proyecto creado: `nido-prototipo-iphone` (`prj_vKnWajD3DFAU601YSOv74G9GRPqQ`), conectado a GitHub y separado de otros sitios.
 
 Configuración: Root Directory `prototype`, Framework Other, Output Directory `public`, sin instalación ni compilación. Así se publica únicamente el contenido de `prototype/public`; los documentos de proyecto y pruebas quedan fuera del sitio.
 
 Desarrollo local: desde raíz, `python3 -m http.server 8000 --directory prototype/public`. Test móvil: con Playwright disponible, `node prototype/tests/mobile.cjs` (variable opcional `PLAYWRIGHT_MODULE` para indicar ubicación del paquete). El test admite `NIDO_URL` para comprobar un deployment. La prueba es de carga y tamaño, no de aceptación integral.
 
-No publicar datos de pacientes reales ni credenciales en esta demostración. No cambiar otros proyectos Vercel ni asumir que la landing histórica es este prototipo. URL pública y estado final se actualizan cuando exista un deployment verificado.
+No publicar datos de pacientes reales ni credenciales en esta demostración. No cambiar otros proyectos Vercel ni asumir que la landing histórica es este prototipo. URL pública: https://nido-prototipo-iphone.vercel.app. Primer despliegue confirmado READY en producción desde el commit `76cfa7f`, por integración Git; sin autenticación Vercel para abrir la demo. Nuevos pushes a main actualizan el sitio.
 
 ## Procedencia y conservación
 
-Consolidado de Contexto_Proyecto_Nido.md, Discovery de Nido.pdf, Formulario_SF.docx, Formulario_Emprendimineto_Cie.docx, HTML original y decisiones del usuario en este chat. El README original solo contenía el nombre del repositorio. Antes de reemplazar la estructura se conserva un respaldo externo con los seis archivos originales. Los formularios firmables y sus datos académicos se recuperan del respaldo; estos Markdown no sustituyen sus formatos oficiales.
+Consolidado de Contexto_Proyecto_Nido.md, Discovery de Nido.pdf, Formulario_SF.docx, Formulario_Emprendimineto_Cie.docx, HTML original y decisiones del usuario en este chat. El README original solo contenía el nombre del repositorio. Antes de reemplazar la estructura se guardó `respaldo-originales-2026-10-28.zip` en el espacio de trabajo de Tesis-Nido, bajo `outputs/nido-contexto-prototipo/`, con los seis archivos originales y verificación de igualdad de contenido. Los formularios firmables y sus datos académicos se recuperan del respaldo; estos Markdown no sustituyen sus formatos oficiales.
 
 Pendientes académicos: confirmar experta y carta, aval CIE, consolidar identidad de entrevistados/revisitas, auditar landing si se obtienen originales y alinear formularios con decisiones vigentes. Contactos personales y números de estudiantes no se duplican en la documentación de trabajo.
