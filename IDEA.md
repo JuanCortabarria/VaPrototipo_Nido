@@ -41,6 +41,8 @@ Prototipo navegable exclusivamente orientado a celulares iPhone y accesible desd
 
 **Información a acción:** elegir persona → adjuntar foto/documento → revisar y corregir datos propuestos → guardar → crear un pendiente vinculado con fecha y responsable. Guardar un archivo no obliga a crear una tarea. Persona y archivo bastan para la carga inicial; título, fecha y contenido pueden completarse después.
 
+**Indicación a plan:** un documento médico ficticio propone gestionar una resonancia, un control posterior dentro de un mes y una compra de medicamentos. La persona revisa fuentes, fechas, stock y responsables antes de seleccionar y confirmar. Los datos ilegibles requieren verificación; las tareas conservan la fuente y sus relaciones. Este análisis es simulado en el prototipo.
+
 **Coordinación:** identificar un pendiente → asignar responsable → registrar cumplimiento → consultar historial. Reabrir o corregir una tarea debe conservar el registro anterior. «No puedo» solicita que Sofía reasigne a alguien con acceso. Los avisos se repiten hasta responder; estar al tanto no equivale a haber completado la tarea.
 
 **Medicación a reposición:** revisar cantidad y vencimientos → corregir información → preparar lista de reposición o gestión de receta → registrar resolución. El inventario se mantiene por persona, sin ubicaciones. La cantidad es registrada o estimada, no una medición automática del botiquín.

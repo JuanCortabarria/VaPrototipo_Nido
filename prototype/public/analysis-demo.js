@@ -1,0 +1,66 @@
+// Prepared demonstration only. No document parser, model, or external medical service.
+function nextCalendarMonth(iso){const d=new Date(iso+'T12:00');const day=d.getDate();d.setDate(1);d.setMonth(d.getMonth()+1);const end=new Date(d.getFullYear(),d.getMonth()+1,0).getDate();d.setDate(Math.min(day,end));return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`}
+function demoMedicalText(owner,date){return `CONSULTORIO DE TRAUMATOLOGÍA — DOCUMENTO FICTICIO\nPaciente: ${people[owner].full}\nFecha: ${date}\n\nINDICACIONES DE EJEMPLO\n• Coordinar resonancia magnética de rodilla derecha.\n• Control con traumatólogo dentro de un mes, luego de realizar la resonancia. Llevar el resultado.\n• Comprar: Paracetamol 500 mg, una caja.\n• Comprar: [nombre no legible], una caja.\n\nEjemplo para probar organización de gestiones. No es una receta válida ni una indicación de tratamiento. No contiene pauta de administración. El segundo nombre debe verificarse con el profesional; Nido no lo infiere.`}
+function analysisEntry(d){return d.analysisDemo&&can(d)&&canOwner(d.owner,'calendar')?button(d.planConfirmedAt?'Ver plan creado':'Analizar y proponer tareas · demo','analyze-demo',d.id,'btn full'):''}
+function analysisCandidates(d){return actors.filter(a=>actorCanSee(a,d)&& (a===d.owner||grantCategories(db.grants[d.owner]?.[a]).includes('calendar')))}
+function stockReference(owner,title){
+ if(!canOwner(owner,'meds'))return 'Sin permiso para consultar medicamentos de esta persona.';
+ const match=visible(db.meds).find(m=>m.owner===owner&&m.title.toLocaleLowerCase().trim()===title.toLocaleLowerCase().trim());
+ if(!match)return 'No hay un registro coincidente. Esto no significa que no haya unidades en casa.';
+ const t=stockTotals(match);return `Stock registrado: ${t.dated} ${match.unit} con fecha vigente, ${t.expired} vencidas y ${t.unknown} sin fecha. Actualizado: ${dateLabel(match.updated)}. Confirmá la cantidad física; no calculamos cuánto tratamiento cubre.`;
+}
+function dependencyBlock(e){
+ if(!e.prerequisiteLabel&&!e.purchaseItems)return '';
+ let html='';
+ if(e.prerequisiteLabel){const prior=e.prerequisite&&db.events.find(x=>x.id===e.prerequisite);const shown=prior&&can(prior,'care');const conflict=shown&&prior.tracking?.stage==='booked'&&e.tracking?.stage==='booked'&&prior.date>=e.date;
+ html+=`<div class="notice"><strong>Antes del control</strong><p>${esc(e.prerequisiteLabel)}</p><p>${shown?(prior.status==='done'?'Resonancia marcada como realizada. Recordá llevar el resultado.':prior.status==='canceled'?'La gestión de resonancia está cancelada. Revisá cómo resolver el estudio previo.':'Podés gestionar ambos turnos ahora; el estudio debe realizarse antes del control.'):'El estudio previo no tiene una tarea visible vinculada. Confirmá cómo se realizará.'}</p>${conflict?'<p><strong>Revisá las fechas: la resonancia figura el mismo día o después del control.</strong></p>':''}${shown?button('Ver gestión de resonancia','event',prior.id,'btn secondary full'):''}</div>`;
+ }
+ if(e.purchaseItems)html+=`<div class="card"><h3>Lista de compra confirmada</h3>${e.purchaseItems.map(item=>`<p><strong>${esc(item.name)}</strong> · ${esc(item.quantity)}<br><small>${esc(stockReference(e.owner,item.name))}</small></p>`).join('')}<small>Completar esta gestión no modifica el inventario. Registrá las cajas recibidas en Medicamentos.</small></div>`;
+ return html;
+}
+function analysisSheet(s){
+ if(s.type==='medical-demo'){
+  const owner=allowedPatients('calendar').find(p=>p==='antonio'&&canOwner(p))||allowedPatients().find(p=>canOwner(p,'calendar'));
+  if(!owner){denied();return true}
+  sheet('Probar una indicación médica',`<div class="notice demo">Documento preparado · IA simulada. Este ejemplo muestra el recorrido que buscamos, sin analizar archivos reales.</div><div class="paper">TRAUMATOLOGÍA · EJEMPLO FICTICIO<br><br>Resonancia de rodilla derecha.<br>Control dentro de un mes, luego de la resonancia.<br>Comprar Paracetamol 500 mg, una caja.<br>Comprar [nombre no legible], una caja.</div><form id="medical-demo-form"><label>Persona del ejemplo</label><select name="owner">${allowedPatients().filter(p=>canOwner(p,'calendar')).map(p=>`<option value="${p}" ${p===owner?'selected':''}>${people[p].name}</option>`).join('')}</select><label>Fecha escrita en el documento</label><input type="date" name="date" value="${today()}" required><p class="tiny">Para interpretar «dentro de un mes» necesitamos esta fecha. Si falta en un documento real, habría que confirmarla.</p><label class="check"><input type="checkbox" name="private">Guardar privado para su titular</label><button class="btn full">Cargar documento de ejemplo</button></form>`);return true;
+ }
+ if(['analysis-review','analysis-plan'].includes(s.type)){
+  const d=db.documents.find(d=>d.id===s.id);if(!can(d)||!canOwner(d.owner,'calendar')||!d.analysisDemo){denied();return true}
+  if(d.planConfirmedAt||s.type==='analysis-plan'){
+   const ev=visible(db.events,'care').filter(e=>e.source===d.id&&e.analysisPlan);
+   sheet('Plan de seguimiento',`<div class="notice done">${ev.length} gestiones visibles · confirmadas por vos. No se reservaron turnos ni se compraron medicamentos.</div>${d.unresolvedMedication?'<div class="notice">Quedó un medicamento con nombre ilegible sin incorporar a la compra. Revisalo contra la fuente; no se inventó su nombre.</div>':''}${ev.map(eventCard).join('')}${button('Ver documento original','document',d.id,'btn secondary full')}<p class="tiny">Podés corregir fechas y responsables dentro de cada gestión. Volver a abrir el análisis no duplica tareas.</p>`);return true;
+  }
+  const candidates=analysisCandidates(d);const def=candidates.includes(d.by)?d.by:candidates[0];
+  const responsible=name=>`<label>Responsable</label><select name="${name}">${candidates.map(a=>`<option value="${a}" ${a===def?'selected':''}>${people[a].name}</option>`).join('')}</select>`;
+  sheet('Revisar propuestas de IA',`<div class="notice demo"><strong>Análisis simulado del ejemplo</strong><p>No se creó ninguna tarea todavía. Revisá las propuestas y desmarcá lo que no quieras agregar.</p></div><p>${people[d.owner].name} · documento del ${dateLabel(d.date)}</p><details><summary>Leer documento fuente</summary><div class="paper">${esc(d.text)}</div></details><form id="analysis-confirm-form"><section class="card"><label class="check"><input type="checkbox" name="mri" checked><strong>Gestionar resonancia</strong></label><blockquote>«Coordinar resonancia magnética de rodilla derecha»</blockquote><label>Tarea propuesta</label><input name="mriTitle" value="Sacar hora para resonancia de rodilla derecha"><label>Empezar gestión</label><input name="mriDate" type="date" value="${today()}">${responsible('mriAssignee')}</section><section class="card"><label class="check"><input type="checkbox" name="control" checked><strong>Gestionar control con traumatólogo</strong></label><blockquote>«Dentro de un mes, luego de realizar la resonancia»</blockquote><label>Tarea propuesta</label><input name="controlTitle" value="Sacar hora para control con traumatólogo"><label>Fecha objetivo propuesta</label><input name="targetDate" type="date" value="${nextCalendarMonth(d.date)}"><p class="tiny">Un mes calendario desde ${dateLabel(d.date)}. Corregí la fecha si corresponde; no es un turno reservado.</p><label>Empezar gestión</label><input name="controlDate" type="date" value="${today()}">${responsible('controlAssignee')}<p>Podés conseguir ambos turnos desde ahora. La resonancia debe realizarse antes del control.</p></section><section class="card"><label class="check"><input type="checkbox" name="purchase" checked><strong>Preparar compra de medicamentos</strong></label><p>Seleccioná qué necesitás comprar y corregí la lista. No se cambia el stock.</p><label class="check"><input type="checkbox" name="med1" checked>Incluir primer medicamento</label><blockquote>«Paracetamol 500 mg, una caja»</blockquote><label>Nombre y presentación</label><input name="med1Name" value="Paracetamol 500 mg"><label>Cantidad a comprar</label><input name="med1Qty" value="1 caja"><p class="tiny" data-stock-hint="1">${esc(stockReference(d.owner,'Paracetamol 500 mg'))}</p><label class="check"><input type="checkbox" name="med2">Incluir medicamento con nombre dudoso</label><blockquote>«[nombre no legible], una caja»</blockquote><div class="notice">Nombre sin resolver: consultá la fuente o al profesional. Podés dejar este ítem sin seleccionar y confirmar los demás.</div><label>Nombre verificado</label><input name="med2Name" placeholder="No vamos a adivinarlo"><label>Cantidad a comprar</label><input name="med2Qty" value="1 caja"><p class="tiny" data-stock-hint="2"></p><label class="check"><input type="checkbox" name="verifiedMed2">Verifiqué el nombre dudoso con una fuente legible o el profesional</label><label>Empezar gestión de compra</label><input type="date" name="purchaseDate" value="${today()}">${responsible('purchaseAssignee')}</section><label class="check"><input name="confirmed" type="checkbox" required>Revisé la persona, las fechas, los responsables y los medicamentos seleccionados</label><button class="btn full" style="margin-top:16px">Confirmar y crear tareas seleccionadas</button></form>`);return true;
+ }
+ return false;
+}
+function analysisForm(form,f,v,s){
+ if(form.id==='medical-demo-form'){
+  if(!canOwner(v.owner)||!canOwner(v.owner,'calendar')){denied();return true}
+  if(!v.date){toast('Confirmá la fecha del documento para calcular el mes.');return true}
+  const d={id:id(),owner:v.owner,by:user,date:v.date,title:'Indicación de traumatología · ejemplo',kind:'Indicación',visibility:v.private?'private':'shared',text:demoMedicalText(v.owner,v.date),analysisDemo:true};db.documents.push(d);if(!persist()){db.documents.pop();return true}open('document',d.id);render();return true;
+ }
+ if(form.id==='analysis-confirm-form'){
+  const d=db.documents.find(d=>d.id===s.id);if(!can(d)||!canOwner(d.owner,'calendar')||!d.analysisDemo){denied();return true}
+  if(d.planConfirmedAt){open('analysis-plan',d.id);return true}
+  if(!v.confirmed){toast('Confirmá la revisión antes de crear las tareas.');return true}
+  const choices=['mri','control','purchase'].filter(k=>v[k]);if(!choices.length){toast('Seleccioná al menos una tarea.');return true}
+  const candidates=analysisCandidates(d);if(choices.some(k=>!candidates.includes(v[k+'Assignee']))){toast('Elegí responsables con acceso al documento y a la agenda.');return true}
+  if(v.mri&&(!v.mriTitle.trim()||!v.mriDate)||v.control&&(!v.controlTitle.trim()||!v.targetDate||!v.controlDate)||v.purchase&&!v.purchaseDate){toast('Completá los datos de las tareas seleccionadas.');return true}
+  if(v.control&&v.controlDate>v.targetDate){toast('El inicio de gestión debe ser anterior o igual al objetivo del control.');return true}
+  const items=[];
+  if(v.purchase){for(const n of [1,2])if(v['med'+n]){const name=v['med'+n+'Name'].trim(),quantity=v['med'+n+'Qty'].trim();if(!name||!quantity||(n===2&&!v.verifiedMed2)){toast('Revisá el medicamento dudoso o desmarcalo para continuar con los demás.');return true}items.push({name,quantity,stockSnapshot:stockReference(d.owner,name)})}if(!items.length){toast('Seleccioná al menos un medicamento o desmarcá la compra.');return true}}
+  const created=[],make=(key,title,type)=>{const e={id:id(),owner:d.owner,source:d.id,analysisPlan:true,title,type,date:v[key+'Date'],time:'',assignee:v[key+'Assignee'],recipient:v[key+'Assignee'],status:'pending',visibility:d.visibility,reminder:'Al comenzar la gestión',history:[{by:user,at:stamp(),action:'Confirmó propuesta del análisis simulado'}],notes:'Propuesta revisada por el usuario. Consultar la indicación original.'};created.push(e);return e};
+  let mri;if(v.mri){mri=make('mri',v.mriTitle.trim(),'Pendiente');mri.bookingType='Estudio';mri.bookedTitle='Resonancia magnética de rodilla derecha';mri.tracking={stage:'to_book',planDate:mri.date,targetDate:''}}
+  if(v.control){const e=make('control',v.controlTitle.trim(),'Pendiente');e.tracking={stage:'to_book',planDate:e.date,targetDate:v.targetDate};e.bookingType='Consulta';e.bookedTitle='Control con traumatólogo';e.prerequisite=mri?.id||null;e.prerequisiteLabel='Realizar la resonancia de rodilla derecha antes del control y llevar el resultado.'}
+  if(v.purchase){const e=make('purchase','Comprar medicamentos de la indicación','Trámite');e.purchaseItems=items}
+  db.events.push(...created);d.planConfirmedAt=stamp();d.planConfirmedBy=user;d.unresolvedMedication=!v.purchase||!v.med2;
+  if(!persist()){db.events=db.events.filter(e=>!created.includes(e));delete d.planConfirmedAt;delete d.planConfirmedBy;delete d.unresolvedMedication;return true}
+  open('analysis-plan',d.id);render();toast(`${created.length} tareas creadas; ninguna reserva ni compra realizada`);return true;
+ }
+ return false;
+}
+const analysisActions={'medical-demo':()=>open('medical-demo'),'analyze-demo':did=>open('analysis-review',did)};
+document.addEventListener('input',event=>{const form=event.target.closest('#analysis-confirm-form');if(!form)return;const d=db.documents.find(d=>d.id===sheetState?.id);if(!can(d))return;for(const n of [1,2])if(event.target.name==='med'+n+'Name')form.querySelector(`[data-stock-hint="${n}"]`).textContent=stockReference(d.owner,event.target.value)});

@@ -8,3 +8,5 @@
 .prep-item{display:flex;align-items:flex-start;gap:12px;width:100%;padding:14px 0;text-align:left;background:none;border:0;border-bottom:1px solid #e8e5df;color:inherit;font:inherit;overflow-wrap:anywhere}
 .prep-item small{display:block;margin-top:5px}.prep-check{flex:0 0 24px;width:24px;height:24px;border:1px solid #607568;border-radius:7px;text-align:center}.checked .prep-check{background:#244f40;color:white}
 .care-photo{display:block;padding:0;border:0;background:none;margin:12px 0}.care-photo img{max-width:100%;width:140px;max-height:140px;object-fit:cover;border-radius:12px}.full-photo{width:100%;height:auto;max-height:none;object-fit:contain}
+
+#analysis-confirm-form blockquote{margin:12px 0;padding:10px 12px;border-left:3px solid #b6cbbd;background:#f1f5f1;font-size:14px;overflow-wrap:anywhere}#analysis-confirm-form .card{margin-top:18px}details summary{cursor:pointer;padding:14px 0;min-height:44px;font-weight:600}

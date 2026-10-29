@@ -138,6 +138,24 @@ Decisiones confirmadas: repetir el aviso al responsable hasta que responda; «No
 
 Validación de esta ampliación: `responses-and-quick-upload.cjs` comprueba solicitud, candidatos autorizados, reasignación, repetición simulada, respuesta sin cierre, reapertura, carga mínima, edición posterior y conservación del original. Pasaron además scenarios, privacy-and-care, discovery-flows y medication-and-categories. Revisión visual de avisos a 375 px; anchos de 375/390/430 px comprobados. iPhone físico y pruebas con usuarios pendientes.
 
+## Documento médico a plan de acciones — análisis simulado
+
+Decisiones confirmadas por Juan: usar un documento ficticio preparado; proponer y permitir corregir/seleccionar antes de crear; gestionar resonancia y control desde ahora manteniendo la secuencia clínica indicada; calcular un mes desde la fecha del documento y confirmar la propuesta; compra editable con stock registrado; dudas señaladas con fuente y revisión humana; responsable inicial igual a quien carga, modificable antes de confirmar.
+
+Recorrido disponible desde Documentos → Agregar → Probar indicación de traumatología + IA:
+
+1. Cargar el ejemplo con persona, fecha del documento y privacidad. Si falta fecha, pedirla; no contar desde la carga. La indicación incluye resonancia de rodilla, control posterior dentro de un mes y dos líneas de compra, una deliberadamente ilegible.
+2. Abrir «Analizar y proponer tareas · demo». Se muestran texto fuente, fragmentos por propuesta, títulos, fechas y responsables editables. Ninguna tarea existe aún.
+3. Confirmar tareas seleccionadas: gestionar resonancia, gestionar control, compra con lista editable. La fecha objetivo suma un mes calendario y ajusta al último día si el siguiente mes es más corto. Es una propuesta que la persona revisa, no una reserva.
+4. El medicamento ilegible queda sin seleccionar. Para incluirlo hay que ingresar nombre/cantidad y confirmar verificación; se pueden crear las otras acciones. El plan señala lo no resuelto.
+5. Stock: comparación por nombre/presentación exactos contra registros visibles de esa persona, separando vigentes, vencidos y sin fecha. No encontrar coincidencia no significa no tener existencias. No se calculan dosis, duración ni equivalencias y no se cambia el inventario.
+6. Ambos turnos pueden gestionarse inmediatamente. El control enlaza a la tarea de resonancia y señala que debe realizarse antes, llevando el resultado. Fechas confirmadas incompatibles muestran aviso. Si no se seleccionó crear la resonancia, la condición sigue visible como pendiente de organización externa.
+7. Responsables elegibles con acceso al documento y la agenda; quien carga queda propuesto si mantiene esos permisos. Fuente y privacidad se aplican a todas las acciones. Reabrir el análisis confirmado muestra el plan sin duplicarlo. Las tareas siguen siendo editables individualmente.
+
+Límite explícito: `analysis-demo.js` usa un ejemplo preparado, no un modelo ni OCR. Los archivos arbitrarios siguen el recorrido de carga mínima manual; no se les atribuye análisis automático. El documento es ficticio, no receta válida. No se hacen reservas, compras ni recomendaciones terapéuticas.
+
+Verificación: `medical-analysis-demo.cjs` cubre mes calendario (31 de enero → 28 de febrero), ausencia de tareas antes de confirmar, datos dudosos, stock, responsables, selección, tres acciones enlazadas, no duplicación, tipos de turno, aviso de secuencia, persistencia y propagación de privacidad. Regresiones anteriores aprobadas y vista revisada en tamaño móvil; validación con personas pendiente.
+
 ## Matriz de cobertura para revisar juntos
 
 Esta matriz distingue necesidades reportadas en la síntesis de entrevistas, orientación de la experta y decisiones de diseño del usuario. No contiene citas verificadas contra transcripciones originales. «Implementado» describe un recorrido del prototipo; su utilidad con usuarios sigue sin validarse. Las seis decisiones de esta ronda están confirmadas; la cobertura completa todavía debe revisarse juntos.
@@ -151,7 +169,7 @@ Esta matriz distingue necesidades reportadas en la síntesis de entrevistas, ori
 | Continuidad entre cuidadores — síntesis y orientación experta | Observación, momento de lo ocurrido, acción realizada, autor, momento del registro y foto opcional | Navegable y probado. Comprobar que el siguiente cuidador entiende qué pasó y qué falta |
 | Reparto informal de gestiones — síntesis de entrevistas | Asignación directa y registro de cumplimiento con historial | Navegable. Pendiente decidir cómo resolver una tarea que el responsable no puede hacer |
 | Confidencialidad — orientación experta y decisión del usuario | Categorías, excepciones privadas y revocación en vistas relacionadas | Simulado con datos ficticios. Falta seguridad de servidor y definición de representantes |
-| Carga y mantenimiento que exigen esfuerzo — síntesis de entrevistas | Captura mínima por persona/archivo, datos completables después y ejemplo de extracción | Parcial: OCR, voz y sincronización no implementados. Medir esfuerzo de carga y actualización |
+| Carga y mantenimiento que exigen esfuerzo — síntesis de entrevistas | Captura mínima por persona/archivo, datos completables después y análisis simulado de indicación a plan | Parcial: OCR, voz y sincronización no implementados. Medir esfuerzo de carga y actualización |
 | Olvidos y recordatorios insuficientes — síntesis y problema inicial del usuario | Configuración de avisos de gestiones y anticipación para recetas | Parcial: repetición hasta respuesta simulada; no hay entrega real ni escalamiento. Tomas fuera del alcance por decisión del usuario |
 | Facilidad para mayores — decisión del usuario | Agenda simplificada de Antonio, letras grandes y pocas acciones | Navegable. Pendiente observación en iPhone físico con usuarios |
 
