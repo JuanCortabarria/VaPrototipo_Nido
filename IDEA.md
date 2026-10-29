@@ -39,9 +39,9 @@ Prototipo navegable exclusivamente orientado a celulares iPhone y accesible desd
 
 ## Recorridos principales
 
-**Información a acción:** elegir persona → adjuntar foto/documento → revisar y corregir datos propuestos → guardar → crear un pendiente vinculado con fecha y responsable. Guardar un archivo no obliga a crear una tarea.
+**Información a acción:** elegir persona → adjuntar foto/documento → revisar y corregir datos propuestos → guardar → crear un pendiente vinculado con fecha y responsable. Guardar un archivo no obliga a crear una tarea. Persona y archivo bastan para la carga inicial; título, fecha y contenido pueden completarse después.
 
-**Coordinación:** identificar un pendiente → asignar responsable → registrar cumplimiento → consultar historial. Reabrir o corregir una tarea debe conservar el registro anterior.
+**Coordinación:** identificar un pendiente → asignar responsable → registrar cumplimiento → consultar historial. Reabrir o corregir una tarea debe conservar el registro anterior. «No puedo» solicita que Sofía reasigne a alguien con acceso. Los avisos se repiten hasta responder; estar al tanto no equivale a haber completado la tarea.
 
 **Medicación a reposición:** revisar cantidad y vencimientos → corregir información → preparar lista de reposición o gestión de receta → registrar resolución. El inventario se mantiene por persona, sin ubicaciones. La cantidad es registrada o estimada, no una medición automática del botiquín.
 

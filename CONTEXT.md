@@ -126,6 +126,18 @@ Los permisos se simulan en cliente con datos ficticios: todos los datos de demos
 
 La extracción del ejemplo es una simulación declarada; archivos arbitrarios requieren completar datos. El asistente usa búsqueda y reglas, no IA conectada. Reservas, compras y renovaciones se registran para organizar gestiones; no se ejecutan con terceros. Los esquemas de vacunas, representación jurídica de menores/adultos dependientes y autorización de datos reales requieren diseño y validación posteriores. Se representa la preparación del traslado como paso organizativo; transporte externo no está integrado. No prometer completitud de producto productivo ni seguridad clínica por pasar pruebas del prototipo.
 
+## Respuestas, reasignación y carga mínima
+
+Decisiones confirmadas: repetir el aviso al responsable hasta que responda; «No puedo» solicita reasignación a Sofía; medicamentos sigue limitado a stock, vencimientos y recetas; guardar documentos solo exige persona y archivo.
+
+- Avisos reiterados representados en la demo: 60 minutos como valor inicial editable (30, 60, 120 minutos o un día), pendiente de validación con usuarios. «Simular siguiente repetición» permite probar el estado sin esperar ni emitir notificaciones reales.
+- «Estoy al tanto» detiene la repetición y conserva la actividad pendiente. Completar o cancelar también la detiene. Reabrir, cambiar fecha/hora o responsable reinicia la respuesta pendiente. Los avisos de repetición corresponden al responsable y respetan su acceso.
+- «No puedo» conserva la actividad y registra motivo opcional, autor y fecha. Sofía ve la solicitud solamente si ya tiene acceso; reasigna a otro perfil autorizado sin ampliar permisos, conservando fuente e historial. No se envían mensajes externos.
+- Carga mínima: persona y JPG/PNG/WebP/PDF ficticio de hasta 1 MB. Nombre del archivo como título provisional, fecha desconocida y contenido vacío; no inventar datos extraídos. Privacidad opcional al guardar. «Completar datos» permite editar después conservando el archivo original.
+- No se implementan horarios ni registro de tomas en esta iteración, por decisión expresa. El problema permanece identificado en la matriz.
+
+Validación de esta ampliación: `responses-and-quick-upload.cjs` comprueba solicitud, candidatos autorizados, reasignación, repetición simulada, respuesta sin cierre, reapertura, carga mínima, edición posterior y conservación del original. Pasaron además scenarios, privacy-and-care, discovery-flows y medication-and-categories. Revisión visual de avisos a 375 px; anchos de 375/390/430 px comprobados. iPhone físico y pruebas con usuarios pendientes.
+
 ## Matriz de cobertura para revisar juntos
 
 Esta matriz distingue necesidades reportadas en la síntesis de entrevistas, orientación de la experta y decisiones de diseño del usuario. No contiene citas verificadas contra transcripciones originales. «Implementado» describe un recorrido del prototipo; su utilidad con usuarios sigue sin validarse. Las seis decisiones de esta ronda están confirmadas; la cobertura completa todavía debe revisarse juntos.
@@ -139,8 +151,8 @@ Esta matriz distingue necesidades reportadas en la síntesis de entrevistas, ori
 | Continuidad entre cuidadores — síntesis y orientación experta | Observación, momento de lo ocurrido, acción realizada, autor, momento del registro y foto opcional | Navegable y probado. Comprobar que el siguiente cuidador entiende qué pasó y qué falta |
 | Reparto informal de gestiones — síntesis de entrevistas | Asignación directa y registro de cumplimiento con historial | Navegable. Pendiente decidir cómo resolver una tarea que el responsable no puede hacer |
 | Confidencialidad — orientación experta y decisión del usuario | Categorías, excepciones privadas y revocación en vistas relacionadas | Simulado con datos ficticios. Falta seguridad de servidor y definición de representantes |
-| Carga y mantenimiento que exigen esfuerzo — síntesis de entrevistas | Captura local, revisión manual y ejemplo de extracción | Parcial: OCR, voz y sincronización no implementados. Medir esfuerzo de carga y actualización |
-| Olvidos y recordatorios insuficientes — síntesis y problema inicial del usuario | Configuración de avisos de gestiones y anticipación para recetas | Parcial: no hay entrega real de notificaciones ni escalamiento; falta definir recordatorios de tomas |
+| Carga y mantenimiento que exigen esfuerzo — síntesis de entrevistas | Captura mínima por persona/archivo, datos completables después y ejemplo de extracción | Parcial: OCR, voz y sincronización no implementados. Medir esfuerzo de carga y actualización |
+| Olvidos y recordatorios insuficientes — síntesis y problema inicial del usuario | Configuración de avisos de gestiones y anticipación para recetas | Parcial: repetición hasta respuesta simulada; no hay entrega real ni escalamiento. Tomas fuera del alcance por decisión del usuario |
 | Facilidad para mayores — decisión del usuario | Agenda simplificada de Antonio, letras grandes y pocas acciones | Navegable. Pendiente observación en iPhone físico con usuarios |
 
 ### Recorridos añadidos en esta ronda
