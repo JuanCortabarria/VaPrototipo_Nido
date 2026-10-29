@@ -20,6 +20,11 @@ Nido es el nombre de trabajo; no se ha verificado disponibilidad definitiva. Exi
 - Priorizar foto/documento → revisar datos → guardar → crear pendiente.
 - Mejorar primero la app; decidir WhatsApp después.
 - Ningún documento manda automáticamente ante contradicciones: distinguir evidencia, propuesta y decisión; resolver con el usuario.
+- Próxima prioridad confirmada: medicamentos y recetas, enfocada en cajas, vencimientos y renovación; no desarrollar horarios ni registro de tomas en esta iteración.
+- Antonio abre una agenda simplificada con letras grandes y pocas acciones.
+- Permisos elegibles por categoría, con documentos individuales privados como excepción permanente.
+- Tareas asignadas directamente; el responsable registra cumplimiento, sin etapa de aceptación.
+- Evaluación mediante exploración libre y comentarios posteriores.
 - Preguntas al usuario en formato de selección. Idioma de trabajo: español rioplatense, claro y conciso.
 
 ## Base de investigación y sus límites
@@ -92,9 +97,22 @@ Escenario pedido por el usuario: Antonio tiene un resultado ficticio de anatomí
 - Asistente de búsqueda sobre datos visibles. Sin interpretación médica ni respuestas que revelen registros privados.
 - Estados vacíos, etiquetas de privacidad, formularios, corrección de acciones y conservación local de cambios.
 
+### Ampliación de medicamentos, permisos y agenda simple
+
+- Inventario por cajas ordenadas por fecha. Cantidades separadas: fecha vigente, vencida y sin registrar; no se presentan todas como disponibles para tratamiento.
+- Retiro de caja con motivo e historial y restauración del registro. La cantidad total activa excluye cajas retiradas.
+- Búsqueda y filtros Todos, Revisar, Recetas y Reposición. Umbral de revisión de cantidad y días de aviso de receta configurables por medicamento.
+- Flujo de renovación: pendiente de coordinar → consulta coordinada → nueva receta registrada. Reutiliza un único pendiente activo por medicamento; registrar una nueva receta cierra la gestión y conserva el vencimiento anterior en el historial. Iniciar la gestión no extiende su vigencia.
+- Fecha desconocida explícita, sin inventar vencimientos; edición de datos sin alterar las cantidades de las cajas. No valida legalmente la receta ni calcula dosis o días de tratamiento.
+- Antonio entra en Hoy/Mañana y próximas actividades con tipografía mayor, con opción de abrir calendario completo y volver a la vista simple.
+- Categorías de acceso: agenda/gestiones, medicamentos/recetas, documentos, tareas/notas de cuidado, vacunas. Los permisos anteriores se interpretan conservando sus alcances; los nuevos se guardan como categorías. Los documentos «Solo yo» continúan excluidos.
+- El filtro central evalúa la categoría del registro en cada vista y exige también autorización sobre fuentes vinculadas. Revocar medicamentos oculta las gestiones vinculadas; revocar documentos oculta sus actividades vinculadas. Cambiar perfil limpia resultados anteriores.
+- Asignación directa de tareas, sin aceptación. Comentarios de exploración desde Familia: facilidad percibida, qué intentó y qué cambiaría; guardado local y descarga JSON del propio perfil, sin envío automático.
+- Se conserva el almacenamiento anterior (`nido-demo-v3`), con una actualización compatible del vínculo de la renovación de ejemplo. Los ejemplos nuevos de cajas se ven en una demo nueva o al restablecerla; no se sobrescriben cambios existentes.
+
 ### Validación realizada
 
-WebKit a 375, 390 y 430 px: carga y las cinco secciones sin desbordamiento horizontal ni errores JavaScript. Pruebas de recorridos: separación de perfiles; documento privado y consulta asociada; ausencia de resultado en asistente/avisos; compartir y volver a restringir; revocación/solicitud/aceptación; documento a pendiente; stock con cero unidades y compra; completar/reabrir con historial; crear/editar/cancelar actividad; destinatario de aviso; preguntas; vacunas; notas de cuidadora; persistencia al recargar. Se revisaron capturas de calendario y documento privado. Pendientes pruebas con usuarios y en iPhone físico.
+WebKit a 375, 390 y 430 px: carga y las cinco secciones sin desbordamiento horizontal ni errores JavaScript. Pruebas de recorridos: separación de perfiles; documento privado y consulta asociada; ausencia de resultado en asistente/avisos; compartir y volver a restringir; revocación/solicitud/aceptación; documento a pendiente; stock con cero unidades y compra; completar/reabrir con historial; crear/editar/cancelar actividad; destinatario de aviso; preguntas; vacunas; notas de cuidadora; persistencia al recargar. Se revisaron capturas de calendario, documento privado, agenda simplificada y medicamentos. También se probaron retiro/restauración de cajas, fechas desconocidas y vencidas, renovación sin duplicados, recepción de receta sin alterar inventario, permisos independientes de documentos/medicación, comentarios descargables y persistencia. Se verificó el ancho del área desplazable, además del ancho de la página. Pendientes pruebas con usuarios y en iPhone físico.
 
 ### Límites de esta versión
 
@@ -120,7 +138,7 @@ Calendario: crear/editar/reprogramar/cancelar; registrar responsable; preparar c
 2. Evaluar con usuarios el calendario y el recorrido documento a pendiente implementados.
 3. Evaluar mantenimiento del inventario y claridad de la coordinación familiar.
 4. Revisar en iPhone físico teclado, scroll, legibilidad y accesibilidad táctil.
-5. Probar con familiares/cuidadores: encontrar turno, crear pendiente desde indicación, corregir existencias, repartir tarea y restringir documento.
+5. Dejar que familiares/cuidadores exploren libremente; después recoger qué intentaron, qué entendieron y dónde se trabaron. No guiar el recorrido salvo que pidan ayuda; registrar esas ayudas.
 6. Registrar finalización sin ayuda, errores, retrocesos y comprensión del resultado; iterar.
 
 Criterios de aceptación: sin desbordamiento horizontal en iPhone; eventos editables; recordatorios sin errores; fuente recuperable desde tarea; alta de medicamentos consistente; historial preservado; revocación efectiva en todos los módulos; simulaciones identificadas.
@@ -128,11 +146,11 @@ Criterios de aceptación: sin desbordamiento horizontal en iPhone; eventos edita
 ## Operación y publicación
 
 Repositorio: `https://github.com/JuanCortabarria/VaPrototipo_Nido`, rama actual `main`.
-Equipo Vercel: `juancortabarrias-projects` (`team_WohC5HtK35faU6BdNXiUqbpU`). Acceso del conector confirmado en esta sesión. Proyecto creado: `nido-prototipo-iphone` (`prj_vKnWajD3DFAU601YSOv74G9GRPqQ`), conectado a GitHub y separado de otros sitios.
+Equipo Vercel: `juancortabarrias-projects` (`team_WohC5HtK35faU6BdNXiUqbpU`). Acceso del conector confirmado durante la publicación. Proyecto creado: `nido-prototipo-iphone` (`prj_vKnWajD3DFAU601YSOv74G9GRPqQ`), conectado a GitHub y separado de otros sitios.
 
 Configuración: Root Directory `prototype`, Framework Other, Output Directory `public`, sin instalación ni compilación. Así se publica únicamente el contenido de `prototype/public`; los documentos de proyecto y pruebas quedan fuera del sitio.
 
-Desarrollo local: desde raíz, `python3 -m http.server 8000 --directory prototype/public`. Test móvil: con Playwright disponible, `node prototype/tests/mobile.cjs` (variable opcional `PLAYWRIGHT_MODULE` para indicar ubicación del paquete). El test admite `NIDO_URL` para comprobar un deployment. Prueba de carga y tamaño: `prototype/tests/mobile.cjs`. Recorridos principales: `prototype/tests/scenarios.cjs`. Casos adicionales de privacidad y cuidado: `prototype/tests/privacy-and-care.cjs`. Todos requieren Playwright con WebKit; `PLAYWRIGHT_MODULE` puede indicar el paquete. `scenarios.cjs` admite `NIDO_URL` para verificar el enlace publicado.
+Desarrollo local: desde raíz, `python3 -m http.server 8000 --directory prototype/public`. Test móvil: con Playwright disponible, `node prototype/tests/mobile.cjs` (variable opcional `PLAYWRIGHT_MODULE` para indicar ubicación del paquete). El test admite `NIDO_URL` para comprobar un deployment. Prueba de carga y tamaño: `prototype/tests/mobile.cjs`. Recorridos principales: `prototype/tests/scenarios.cjs`. Casos adicionales de privacidad y cuidado: `prototype/tests/privacy-and-care.cjs`. Todos requieren Playwright con WebKit; `PLAYWRIGHT_MODULE` puede indicar el paquete. `scenarios.cjs` y `medication-and-categories.cjs` admiten `NIDO_URL` para verificar el enlace publicado. La prueba nueva cubre cajas, renovación, categorías, agenda simple y comentarios.
 
 No publicar datos de pacientes reales ni credenciales en esta demostración. No cambiar otros proyectos Vercel ni asumir que la landing histórica es este prototipo. URL pública: https://nido-prototipo-iphone.vercel.app. Primer despliegue confirmado READY en producción desde el commit `76cfa7f`, por integración Git; sin autenticación Vercel para abrir la demo. Nuevos pushes a main actualizan el sitio.
 

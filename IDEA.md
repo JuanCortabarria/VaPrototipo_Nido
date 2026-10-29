@@ -31,7 +31,7 @@ Prototipo navegable exclusivamente orientado a celulares iPhone y accesible desd
 | --- | --- |
 | Calendario y pendientes | Consultas, estudios y gestiones; filtros por persona, responsables y recordatorios |
 | Documentos | Carga por foto o archivo, revisión humana, búsqueda y vínculo con pendientes |
-| Medicamentos | Existencias registradas, cajas, vencimiento de medicamento y receta, reposición |
+| Medicamentos | Cajas y cantidades con fechas separadas, retiro/restauración, reposición y seguimiento de renovación de recetas |
 | Familia y permisos | Solicitar acceso; cada adulto decide qué comparte; revocación coherente |
 | Asistente dentro de la app | Buscar información con fuente y proponer acciones para confirmar |
 | Notas de cuidado | Registro cronológico de observaciones y acciones de cuidadores autorizados |
@@ -47,7 +47,7 @@ Prototipo navegable exclusivamente orientado a celulares iPhone y accesible desd
 
 ## Experiencias por usuario
 
-La demo presenta a Sofía (administradora), Antonio (abuelo), Rosa (cuidadora) y Lucía (hija). Antonio y Lucía solo ven sus propios registros; Rosa accede al cuidado autorizado. Sofía organiza los registros familiares compartidos, pero no ve documentos que Antonio mantiene privados. El resultado confidencial de ejemplo y sus actividades relacionadas solo aparecen para Antonio hasta que él decida compartirlos. Los datos son ficticios y la separación de vistas no reemplaza autenticación real.
+La demo presenta a Sofía (administradora), Antonio (abuelo), Rosa (cuidadora) y Lucía (hija). Antonio abre una agenda simplificada con letras grandes y accesos a Hoy/Mañana. Antonio y Lucía ven por defecto sus propios registros; Rosa accede al cuidado autorizado. Sofía organiza los registros familiares compartidos por categoría, pero no ve documentos que Antonio mantiene privados. Las tareas se asignan directamente y el responsable registra cuándo las completa. El resultado confidencial de ejemplo y sus actividades relacionadas solo aparecen para Antonio hasta que él decida compartirlos. Los datos son ficticios y la separación de vistas no reemplaza autenticación real.
 
 ## Principios
 
@@ -65,4 +65,4 @@ El MVP definitivo surgirá de las pruebas. WhatsApp se decidirá después de mej
 
 ## Cómo evaluar la propuesta
 
-Observar si familiares y cuidadores entienden qué hacer, completan recorridos sin ayuda y reconocen qué información guardaron o compartieron. Medir errores, retrocesos y esfuerzo. Adopción sostenida, reducción de carga y resultados clínicos no pueden concluirse a partir de una demostración.
+Permitir que familiares y cuidadores exploren libremente y después recoger sus comentarios: qué intentaron hacer, qué entendieron y qué cambiarían. Observar errores, retrocesos y pedidos de ayuda sin imponer tareas durante esta ronda. Hay un formulario local de comentarios con descarga para compartir voluntariamente con el equipo. Adopción sostenida, reducción de carga y resultados clínicos no pueden concluirse a partir de una demostración.
