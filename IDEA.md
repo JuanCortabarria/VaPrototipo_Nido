@@ -29,12 +29,12 @@ Prototipo navegable exclusivamente orientado a celulares iPhone y accesible desd
 
 | Módulo | Experiencia deseada |
 | --- | --- |
-| Calendario y pendientes | Consultas, estudios y gestiones; filtros por persona, responsables y recordatorios |
-| Documentos | Carga por foto o archivo, revisión humana, búsqueda y vínculo con pendientes |
+| Calendario y pendientes | Indicación → inicio anticipado de gestión → turno confirmado; responsables y lista de preparación |
+| Documentos | Foto o archivo, revisión humana, filtros por persona/fecha/tipo, original y vínculo con pendientes |
 | Medicamentos | Cajas y cantidades con fechas separadas, retiro/restauración, reposición y seguimiento de renovación de recetas |
 | Familia y permisos | Solicitar acceso; cada adulto decide qué comparte; revocación coherente |
 | Asistente dentro de la app | Buscar información con fuente y proponer acciones para confirmar |
-| Notas de cuidado | Registro cronológico de observaciones y acciones de cuidadores autorizados |
+| Notas de cuidado | Qué ocurrió, cuándo, qué se hizo, quién registró y foto opcional |
 | Vacunas | Organizar registros y pendientes, distinguiendo datos de ejemplo de pautas verificadas |
 
 ## Recorridos principales
@@ -43,7 +43,7 @@ Prototipo navegable exclusivamente orientado a celulares iPhone y accesible desd
 
 **Coordinación:** identificar un pendiente → asignar responsable → registrar cumplimiento → consultar historial. Reabrir o corregir una tarea debe conservar el registro anterior.
 
-**Medicación a reposición:** revisar cantidad y vencimientos → corregir información → preparar lista de reposición o gestión de receta → registrar resolución. La cantidad es registrada o estimada, no una medición automática del botiquín.
+**Medicación a reposición:** revisar cantidad y vencimientos → corregir información → preparar lista de reposición o gestión de receta → registrar resolución. El inventario se mantiene por persona, sin ubicaciones. La cantidad es registrada o estimada, no una medición automática del botiquín.
 
 ## Experiencias por usuario
 

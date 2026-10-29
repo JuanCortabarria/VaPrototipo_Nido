@@ -25,6 +25,12 @@ Nido es el nombre de trabajo; no se ha verificado disponibilidad definitiva. Exi
 - Permisos elegibles por categoría, con documentos individuales privados como excepción permanente.
 - Tareas asignadas directamente; el responsable registra cumplimiento, sin etapa de aceptación.
 - Evaluación mediante exploración libre y comentarios posteriores.
+- Revisar juntos una matriz de necesidades, evidencia y funciones; no asumir que toda sugerencia es un requisito validado.
+- Indicación futura → pendiente con inicio anticipado de gestión → fecha de turno confirmada por el usuario.
+- Preparación de consulta: documentos, autorización, traslado e indicaciones ingresadas por el usuario.
+- Inventario por persona, sin ubicaciones en esta etapa.
+- Notas de cuidado: qué ocurrió, cuándo, qué se hizo, quién lo registró y foto opcional.
+- Recuperación documental por persona, fecha y tipo, con acceso a la fuente original disponible.
 - Preguntas al usuario en formato de selección. Idioma de trabajo: español rioplatense, claro y conciso.
 
 ## Base de investigación y sus límites
@@ -118,7 +124,33 @@ WebKit a 375, 390 y 430 px: carga y las cinco secciones sin desbordamiento horiz
 
 Los permisos se simulan en cliente con datos ficticios: todos los datos de demostración están en código/almacenamiento del navegador. No hay autenticación, autorización de servidor, cifrado clínico, sincronización entre dispositivos ni servicio de notificaciones. El selector de persona no es login. La persistencia local puede borrarse con los datos del navegador. Los archivos no se suben a un servidor.
 
-La extracción del ejemplo es una simulación declarada; archivos arbitrarios requieren completar datos. El asistente usa búsqueda y reglas, no IA conectada. Reservas, compras y renovaciones se registran para organizar gestiones; no se ejecutan con terceros. Los esquemas de vacunas, representación jurídica de menores/adultos dependientes y autorización de datos reales requieren diseño y validación posteriores. Transporte externo no está implementado. No prometer completitud de producto productivo ni seguridad clínica por pasar pruebas del prototipo.
+La extracción del ejemplo es una simulación declarada; archivos arbitrarios requieren completar datos. El asistente usa búsqueda y reglas, no IA conectada. Reservas, compras y renovaciones se registran para organizar gestiones; no se ejecutan con terceros. Los esquemas de vacunas, representación jurídica de menores/adultos dependientes y autorización de datos reales requieren diseño y validación posteriores. Se representa la preparación del traslado como paso organizativo; transporte externo no está integrado. No prometer completitud de producto productivo ni seguridad clínica por pasar pruebas del prototipo.
+
+## Matriz de cobertura para revisar juntos
+
+Esta matriz distingue necesidades reportadas en la síntesis de entrevistas, orientación de la experta y decisiones de diseño del usuario. No contiene citas verificadas contra transcripciones originales. «Implementado» describe un recorrido del prototipo; su utilidad con usuarios sigue sin validarse. Las seis decisiones de esta ronda están confirmadas; la cobertura completa todavía debe revisarse juntos.
+
+| Necesidad / evidencia disponible | Respuesta del prototipo | Estado y comprobación pendiente |
+| --- | --- | --- |
+| Indicaciones que quedan sin agendar — síntesis de entrevistas | Documento → pendiente → inicio de gestión anticipado → turno confirmado; misma fuente e historial | Navegable y probado. Ver si la familia distingue objetivo, inicio de gestión y fecha confirmada |
+| Preparar consultas — propuesta de coordinación y decisión del usuario | Lista editable: documentos, autorización, traslado e indicaciones ingresadas; responsable de cada cambio | Navegable y probado. No genera preparación médica; confirmar utilidad con entrevistados |
+| Papeles e información difíciles de recuperar — síntesis de entrevistas | Filtros por persona, fechas y tipo; documento y fuente original | Navegable y probado. Ejemplos sin archivo se identifican como texto; medir recuperación sin ayuda |
+| Recetas vencidas y falta de existencias — síntesis de entrevistas | Cajas, vencimientos, corrección, reposición y renovación separadas | Navegable y probado. Inventario manual por persona; sin ubicaciones por decisión del usuario |
+| Continuidad entre cuidadores — síntesis y orientación experta | Observación, momento de lo ocurrido, acción realizada, autor, momento del registro y foto opcional | Navegable y probado. Comprobar que el siguiente cuidador entiende qué pasó y qué falta |
+| Reparto informal de gestiones — síntesis de entrevistas | Asignación directa y registro de cumplimiento con historial | Navegable. Pendiente decidir cómo resolver una tarea que el responsable no puede hacer |
+| Confidencialidad — orientación experta y decisión del usuario | Categorías, excepciones privadas y revocación en vistas relacionadas | Simulado con datos ficticios. Falta seguridad de servidor y definición de representantes |
+| Carga y mantenimiento que exigen esfuerzo — síntesis de entrevistas | Captura local, revisión manual y ejemplo de extracción | Parcial: OCR, voz y sincronización no implementados. Medir esfuerzo de carga y actualización |
+| Olvidos y recordatorios insuficientes — síntesis y problema inicial del usuario | Configuración de avisos de gestiones y anticipación para recetas | Parcial: no hay entrega real de notificaciones ni escalamiento; falta definir recordatorios de tomas |
+| Facilidad para mayores — decisión del usuario | Agenda simplificada de Antonio, letras grandes y pocas acciones | Navegable. Pendiente observación en iPhone físico con usuarios |
+
+### Recorridos añadidos en esta ronda
+
+- Objetivo indicado y fecha de inicio de gestión separados. Si el usuario completa el objetivo y deja vacío el inicio, se calcula con la anticipación elegida (14 días como valor editable de demostración, no regla clínica). No se infieren plazos del texto médico.
+- Registrar un turno confirmado actualiza la misma actividad, conserva el documento fuente y el historial. Fecha posterior al objetivo se señala sin impedir registrar lo acordado con el prestador.
+- Lista de preparación con pasos generales editables mediante agregado y marcado; guarda quién marcó cada paso y cuándo. No interpreta indicaciones médicas.
+- Documentos filtrables por persona, tipo e intervalo de fechas; clasificación al cargar. Acceso al archivo adjunto o al texto de ejemplo, claramente diferenciado.
+- Notas con fecha/hora del episodio, acción realizada y fecha/autor del registro. Foto ficticia opcional JPG/PNG/WebP de hasta 1 MB, guardada localmente. Registros antiguos siguen visibles sin inventar datos faltantes.
+- Prueba `prototype/tests/discovery-flows.cjs`: seguimiento sin duplicados, fuente conservada, preparación persistente, filtros, original, nota con foto y control de acceso. Regresión: mobile, scenarios, privacy-and-care y medication-and-categories. WebKit a 375/390/430 px; pruebas con personas e iPhone físico pendientes.
 
 ## Dirección del rediseño — propuesta
 
