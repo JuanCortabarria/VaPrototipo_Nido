@@ -134,7 +134,7 @@ Decisiones confirmadas: repetir el aviso al responsable hasta que responda; «No
 - «Estoy al tanto» detiene la repetición y conserva la actividad pendiente. Completar o cancelar también la detiene. Reabrir, cambiar fecha/hora o responsable reinicia la respuesta pendiente. Los avisos de repetición corresponden al responsable y respetan su acceso.
 - «No puedo» conserva la actividad y registra motivo opcional, autor y fecha. Sofía ve la solicitud solamente si ya tiene acceso; reasigna a otro perfil autorizado sin ampliar permisos, conservando fuente e historial. No se envían mensajes externos.
 - Carga mínima: persona y JPG/PNG/WebP/PDF ficticio de hasta 1 MB. Nombre del archivo como título provisional, fecha desconocida y contenido vacío; no inventar datos extraídos. Privacidad opcional al guardar. «Completar datos» permite editar después conservando el archivo original.
-- No se implementan horarios ni registro de tomas en esta iteración, por decisión expresa. El problema permanece identificado en la matriz.
+- Decisión histórica de esa ronda: no agregar tomas. Quedó ampliada por el pedido posterior de actividades repetidas descrito abajo.
 
 Validación de esta ampliación: `responses-and-quick-upload.cjs` comprueba solicitud, candidatos autorizados, reasignación, repetición simulada, respuesta sin cierre, reapertura, carga mínima, edición posterior y conservación del original. Pasaron además scenarios, privacy-and-care, discovery-flows y medication-and-categories. Revisión visual de avisos a 375 px; anchos de 375/390/430 px comprobados. iPhone físico y pruebas con usuarios pendientes.
 
@@ -156,6 +156,17 @@ Límite explícito: `analysis-demo.js` usa un ejemplo preparado, no un modelo ni
 
 Verificación: `medical-analysis-demo.cjs` cubre mes calendario (31 de enero → 28 de febrero), ausencia de tareas antes de confirmar, datos dudosos, stock, responsables, selección, tres acciones enlazadas, no duplicación, tipos de turno, aviso de secuencia, persistencia y propagación de privacidad. Regresiones anteriores aprobadas y vista revisada en tamaño móvil; validación con personas pendiente.
 
+## Actividades claras, repeticiones y Fernando
+
+Nueva decisión del usuario: incorporar actividades repetidas, incluyendo recordatorios de toma, y un padre llamado Fernando con datos inicialmente vacíos. Esto amplía la decisión anterior de limitar medicamentos a stock/recetas: ahora hay recordatorios de toma en Calendario; el módulo de inventario no calcula ni descuenta dosis.
+
+- Tipos visibles explícitos: Consulta médica, Estudio médico, Tarea pendiente, Gestión de salud, Cuidado familiar, Tomar medicamento y Vacunación. Se conservan códigos internos anteriores para compatibilidad.
+- Alta con ejemplos editables: sacar hora con el traumatólogo, consulta médica, tomar medicamento y vacunación. El ejemplo de medicamento muestra 09:00 y 22:00, como pidió el usuario, para revisar según su indicación; no es una pauta recomendada.
+- Una vez, todos los días o días elegidos de cada semana, con hasta dos horarios y fecha final explícita. Cada ocurrencia se guarda por separado; completar/editar una no completa/modifica las demás. Detener la serie cancela pendientes desde hoy y conserva realizados y anteriores. La demo permite hasta un año por serie; no hay programación indefinida ni notificaciones reales.
+- Vacunación permite ingresar repeticiones manuales, sin sugerir una frecuencia semanal ni validar pautas clínicas.
+- Fernando es un perfil de padre sin eventos, documentos, medicamentos, notas ni vacunas iniciales. Se puede cargar desde cero, persiste localmente y dispone de controles de permisos. No recibe acceso a otros perfiles ni se comparte con Sofía automáticamente. El selector permite pasar a Fernando sin borrar otros ejemplos.
+- Prueba `routines-and-fernando.cjs`: perfil vacío, aislamiento, horarios 09/22, lunes semanales, finalización/edición individual, detener serie y persistencia. Regresiones existentes probadas; anchos de 375/390/430 px verificados. Validación en iPhone físico pendiente.
+
 ## Matriz de cobertura para revisar juntos
 
 Esta matriz distingue necesidades reportadas en la síntesis de entrevistas, orientación de la experta y decisiones de diseño del usuario. No contiene citas verificadas contra transcripciones originales. «Implementado» describe un recorrido del prototipo; su utilidad con usuarios sigue sin validarse. Las seis decisiones de esta ronda están confirmadas; la cobertura completa todavía debe revisarse juntos.
@@ -170,7 +181,7 @@ Esta matriz distingue necesidades reportadas en la síntesis de entrevistas, ori
 | Reparto informal de gestiones — síntesis de entrevistas | Asignación directa y registro de cumplimiento con historial | Navegable. Pendiente decidir cómo resolver una tarea que el responsable no puede hacer |
 | Confidencialidad — orientación experta y decisión del usuario | Categorías, excepciones privadas y revocación en vistas relacionadas | Simulado con datos ficticios. Falta seguridad de servidor y definición de representantes |
 | Carga y mantenimiento que exigen esfuerzo — síntesis de entrevistas | Captura mínima por persona/archivo, datos completables después y análisis simulado de indicación a plan | Parcial: OCR, voz y sincronización no implementados. Medir esfuerzo de carga y actualización |
-| Olvidos y recordatorios insuficientes — síntesis y problema inicial del usuario | Configuración de avisos de gestiones y anticipación para recetas | Parcial: repetición hasta respuesta simulada; no hay entrega real ni escalamiento. Tomas fuera del alcance por decisión del usuario |
+| Olvidos y recordatorios insuficientes — síntesis y problema inicial del usuario | Configuración de avisos de gestiones y anticipación para recetas | Parcial: repetición hasta respuesta simulada; no hay entrega real ni escalamiento. Ahora incluye actividades de toma recurrentes por decisión posterior; entrega real de avisos pendiente |
 | Facilidad para mayores — decisión del usuario | Agenda simplificada de Antonio, letras grandes y pocas acciones | Navegable. Pendiente observación en iPhone físico con usuarios |
 
 ### Recorridos añadidos en esta ronda

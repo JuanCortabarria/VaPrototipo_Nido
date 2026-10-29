@@ -43,13 +43,15 @@ Prototipo navegable exclusivamente orientado a celulares iPhone y accesible desd
 
 **Indicación a plan:** un documento médico ficticio propone gestionar una resonancia, un control posterior dentro de un mes y una compra de medicamentos. La persona revisa fuentes, fechas, stock y responsables antes de seleccionar y confirmar. Los datos ilegibles requieren verificación; las tareas conservan la fuente y sus relaciones. Este análisis es simulado en el prototipo.
 
+**Rutinas:** actividades diarias o por días de la semana, con horarios y fecha final definidos por la persona. Cada ocurrencia tiene su propio estado; registrar una toma no demuestra ingestión ni actualiza automáticamente el stock.
+
 **Coordinación:** identificar un pendiente → asignar responsable → registrar cumplimiento → consultar historial. Reabrir o corregir una tarea debe conservar el registro anterior. «No puedo» solicita que Sofía reasigne a alguien con acceso. Los avisos se repiten hasta responder; estar al tanto no equivale a haber completado la tarea.
 
 **Medicación a reposición:** revisar cantidad y vencimientos → corregir información → preparar lista de reposición o gestión de receta → registrar resolución. El inventario se mantiene por persona, sin ubicaciones. La cantidad es registrada o estimada, no una medición automática del botiquín.
 
 ## Experiencias por usuario
 
-La demo presenta a Sofía (administradora), Antonio (abuelo), Rosa (cuidadora) y Lucía (hija). Antonio abre una agenda simplificada con letras grandes y accesos a Hoy/Mañana. Antonio y Lucía ven por defecto sus propios registros; Rosa accede al cuidado autorizado. Sofía organiza los registros familiares compartidos por categoría, pero no ve documentos que Antonio mantiene privados. Las tareas se asignan directamente y el responsable registra cuándo las completa. El resultado confidencial de ejemplo y sus actividades relacionadas solo aparecen para Antonio hasta que él decida compartirlos. Los datos son ficticios y la separación de vistas no reemplaza autenticación real.
+La demo presenta a Sofía (administradora), Antonio (abuelo), Rosa (cuidadora) Lucía (hija) y Fernando (padre, inicialmente vacío). Antonio abre una agenda simplificada con letras grandes y accesos a Hoy/Mañana. Antonio y Lucía ven por defecto sus propios registros; Rosa accede al cuidado autorizado. Sofía organiza los registros familiares compartidos por categoría, pero no ve documentos que Antonio mantiene privados. Las tareas se asignan directamente y el responsable registra cuándo las completa. El resultado confidencial de ejemplo y sus actividades relacionadas solo aparecen para Antonio hasta que él decida compartirlos. Los datos son ficticios y la separación de vistas no reemplaza autenticación real.
 
 ## Principios
 

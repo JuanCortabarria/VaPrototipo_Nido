@@ -10,3 +10,5 @@
 .care-photo{display:block;padding:0;border:0;background:none;margin:12px 0}.care-photo img{max-width:100%;width:140px;max-height:140px;object-fit:cover;border-radius:12px}.full-photo{width:100%;height:auto;max-height:none;object-fit:contain}
 
 #analysis-confirm-form blockquote{margin:12px 0;padding:10px 12px;border-left:3px solid #b6cbbd;background:#f1f5f1;font-size:14px;overflow-wrap:anywhere}#analysis-confirm-form .card{margin-top:18px}details summary{cursor:pointer;padding:14px 0;min-height:44px;font-weight:600}
+
+.weekday-options{border:1px solid #ddd;border-radius:12px;margin:14px 0;padding:12px}.weekday-options .check{margin:8px 0}
