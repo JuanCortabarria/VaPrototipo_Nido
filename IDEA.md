@@ -51,7 +51,7 @@ Prototipo navegable exclusivamente orientado a celulares iPhone y accesible desd
 
 ## Experiencias por usuario
 
-La demo presenta a Sofía (administradora), Antonio (abuelo), Rosa (cuidadora) Lucía (hija) y Fernando (padre, inicialmente vacío). Antonio abre una agenda simplificada con letras grandes y accesos a Hoy/Mañana. Antonio y Lucía ven por defecto sus propios registros; Rosa accede al cuidado autorizado. Sofía organiza los registros familiares compartidos por categoría, pero no ve documentos que Antonio mantiene privados. Las tareas se asignan directamente y el responsable registra cuándo las completa. El resultado confidencial de ejemplo y sus actividades relacionadas solo aparecen para Antonio hasta que él decida compartirlos. Los datos son ficticios y la separación de vistas no reemplaza autenticación real.
+La demo presenta a Sofía (administradora), Antonio (abuelo), Rosa (cuidadora) Lucía (hija) y Fernando (padre, inicialmente vacío). Antonio abre una agenda simplificada con letras grandes, accesos a Hoy/Mañana y colores acompañados de etiquetas y botones explícitos. Tiene tres medicamentos ficticios con actividades de ejemplo para probar el seguimiento. Antonio y Lucía ven por defecto sus propios registros; Rosa accede al cuidado autorizado. Sofía organiza los registros familiares compartidos por categoría, pero no ve documentos que Antonio mantiene privados. Las tareas se asignan directamente y el responsable registra cuándo las completa. El resultado confidencial de ejemplo y sus actividades relacionadas solo aparecen para Antonio hasta que él decida compartirlos. Los datos son ficticios y la separación de vistas no reemplaza autenticación real.
 
 ## Principios
 

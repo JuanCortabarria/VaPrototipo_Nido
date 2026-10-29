@@ -232,3 +232,11 @@ No publicar datos de pacientes reales ni credenciales en esta demostración. No 
 Consolidado de Contexto_Proyecto_Nido.md, Discovery de Nido.pdf, Formulario_SF.docx, Formulario_Emprendimineto_Cie.docx, HTML original y decisiones del usuario en este chat. El README original solo contenía el nombre del repositorio. Antes de reemplazar la estructura se guardó `respaldo-originales-2026-10-28.zip` en el espacio de trabajo de Tesis-Nido, bajo `outputs/nido-contexto-prototipo/`, con los seis archivos originales y verificación de igualdad de contenido. Los formularios firmables y sus datos académicos se recuperan del respaldo; estos Markdown no sustituyen sus formatos oficiales.
 
 Pendientes académicos: confirmar experta y carta, aval CIE, consolidar identidad de entrevistados/revisitas, auditar landing si se obtienen originales y alinear formularios con decisiones vigentes. Contactos personales y números de estudiantes no se duplican en la documentación de trabajo.
+
+## Antonio: colores y tres medicamentos de demostración
+
+Solicitud del usuario: distinguir mejor los controles con colores y poblar a Antonio con tres medicamentos de ejemplo. Vista con botones azules de borde marcado, medicamentos violetas, cuidados amarillos y estudios verdes; cada tarjeta conserva texto, estado y «Ver actividad», sin depender solo del color.
+
+Se conserva Losartán 50 mg del ejemplo anterior y se agregan Metformina y Atorvastatina como registros ficticios, sin pautas de dosis nuevas ni atribución de diagnósticos. Horarios de demostración 09:00, 13:00 y 22:00, durante 14 días desde la incorporación del ejemplo. No constituyen tratamiento recomendado. La actualización se aplica una vez, preserva datos existentes y mantiene Fernando vacío; restablecer la demo vuelve a generar sus ejemplos.
+
+Pruebas: tres medicamentos/tres actividades diarias de Antonio, persistencia sin duplicados, finalización individual, anchos móviles y revisión visual; regresiones de perfiles, inventario y Fernando aprobadas. Se separaron las tomas de las gestiones de renovación: registrar nueva receta no completa tomas pendientes. Avisos y datos siguen simulados.
