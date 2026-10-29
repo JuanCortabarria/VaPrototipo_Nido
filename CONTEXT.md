@@ -1,6 +1,6 @@
 # Nido — contexto de trabajo
 
-Actualizado: 28 de octubre de 2026. Este archivo reúne estado, decisiones, evidencia y operación. IDEA.md explica el producto; README.md sirve de entrada. Evitar duplicar decisiones en documentos paralelos.
+Actualizado: 29 de octubre de 2026. Este archivo reúne estado, decisiones, evidencia y operación. IDEA.md explica el producto; README.md sirve de entrada. Evitar duplicar decisiones en documentos paralelos.
 
 ## Proyecto y equipo
 
@@ -66,27 +66,41 @@ La reducción del 25% del tiempo de coordinación es una meta preliminar mencion
 | Permisos | Administradora con acceso amplio en HTML | Cada adulto autoriza lo compartido |
 | Modelo económico | Versiones gratuitas y pagas | Pendiente, fuera del foco actual |
 
-## Estado real del prototipo
+## Estado real del prototipo — versión de varios perfiles
 
-`prototype/public/index.html` es una copia adaptada del HTML exportado de Claude Design. Contiene plantilla, estilos, recursos incrustados y lógica de estado. No es una aplicación nativa ni tiene backend. Usa datos ficticios, fechas de demostración de agosto de 2026 y estado en memoria que se pierde al recargar.
+Rediseñado en español con HTML, CSS y JavaScript separados en `prototype/public/`. Calendario como inicio; cinco destinos: Calendario, Documentos, Asistente, Medicamentos y Familia. Fecha inicial relativa al día de apertura. Persistencia en localStorage (`nido-demo-v3`) y restablecimiento desde Familia. Sin dependencias de compilación.
 
-Cambios realizados: diseño fluido para iPhone, altura dinámica de Safari, zonas seguras, campos de 16 px, eliminación del marco y controles de hardware simulados, calendario inicial y cabecera reordenable. Corrección del error de destinatarios del recordatorio y de la estructura del medicamento agregado. Fechas desconocidas de medicamento se deben mostrar como desconocidas, sin inventarlas.
+### Perfiles de demostración
 
-Prueba realizada: carga inicial en WebKit a 375, 390 y 430 px, sin errores JavaScript ni desplazamiento horizontal. No equivale a pruebas de todos los recorridos ni a una prueba en iPhone físico.
+- Sofía: administradora. Accede a sus registros y a los de hijos y Antonio que estén compartidos. No obtiene acceso universal por su rol.
+- Antonio: abuelo. Solo accede a sus propios registros. Controla autorizaciones generales y visibilidad de documentos.
+- Rosa: cuidadora. Solo tareas y notas de cuidado autorizadas de Antonio; no documentos clínicos ni medicamentos.
+- Lucía: hija. Solo su información. Puede ver quién es responsable de su turno, sin acceder a datos de salud de esa persona.
 
-### Limitaciones pendientes
+Escenario pedido por el usuario: Antonio tiene un resultado ficticio de anatomía patológica con un diagnóstico de cáncer. Es «Solo yo». Sofía no ve el contenido, el título ni la consulta vinculada en documentos, calendario, pendientes, búsqueda, asistente o avisos. Antonio puede compartirlo voluntariamente y volver a hacerlo privado. No usar datos reales de pacientes para representar este escenario.
 
-- Interfaz mayormente en inglés; selector de español no traduce realmente.
-- Asistente por palabras clave y respuestas prefijadas; audio simulado.
-- Aparente reserva de turnos, compra y transporte sin integración externa.
-- Acceso amplio de administradora; filtros inconsistentes entre carpetas, agenda, medicamentos y chat; enlaces directos sin revalidación.
-- Otorgar acceso elige un candidato automáticamente; falta una aceptación real representada por el titular.
-- Reabrir tareas elimina autor/hora anteriores; falta historial acumulado.
-- Tareas pasadas sin registro aparecen como incumplidas; distinguir falta de registro.
-- Stock sin lotes/cajas múltiples y con umbral fijo; falta conexión explícita con registros de administración.
-- Documentos almacenan metadatos de ejemplo, no archivos clínicos reales.
-- Vacunas precargadas sin verificación de pauta vigente; familia y parentescos ficticios con inconsistencias.
-- Persistencia, estados vacíos, validaciones y cancelaciones necesitan revisión del recorrido completo.
+### Recorridos implementados
+
+- Cambio de perfil limpia modal, búsqueda y conversación anterior.
+- Calendario semanal/mensual, filtros, agenda y pendientes. Crear, editar, reprogramar, completar, reabrir y cancelar con confirmación; historial conservado.
+- Recordatorio con anticipación y destinatario; solo configuración de demo. Preguntas para la consulta y acceso a documento fuente.
+- Carga de imagen/PDF ficticio de hasta 1 MB, revisión de datos manual o ejemplo preparado, confirmación y creación de pendiente vinculado.
+- Visibilidad del documento propagada a las tareas vinculadas. Accesos reevaluados al abrir registros.
+- Medicamentos con cantidades por caja, vencimientos de caja/receta separados, corrección de existencias, lista de reposición, registro de compra y pendiente de renovación.
+- Notas de cuidado con autor/fecha y registro manual de vacunas, sin recomendación sanitaria automática.
+- Solicitud de acceso de Sofía, aceptación por Antonio, autorización de cuidadora y revocación; historial de permisos para el titular.
+- Asistente de búsqueda sobre datos visibles. Sin interpretación médica ni respuestas que revelen registros privados.
+- Estados vacíos, etiquetas de privacidad, formularios, corrección de acciones y conservación local de cambios.
+
+### Validación realizada
+
+WebKit a 375, 390 y 430 px: carga y las cinco secciones sin desbordamiento horizontal ni errores JavaScript. Pruebas de recorridos: separación de perfiles; documento privado y consulta asociada; ausencia de resultado en asistente/avisos; compartir y volver a restringir; revocación/solicitud/aceptación; documento a pendiente; stock con cero unidades y compra; completar/reabrir con historial; crear/editar/cancelar actividad; destinatario de aviso; preguntas; vacunas; notas de cuidadora; persistencia al recargar. Se revisaron capturas de calendario y documento privado. Pendientes pruebas con usuarios y en iPhone físico.
+
+### Límites de esta versión
+
+Los permisos se simulan en cliente con datos ficticios: todos los datos de demostración están en código/almacenamiento del navegador. No hay autenticación, autorización de servidor, cifrado clínico, sincronización entre dispositivos ni servicio de notificaciones. El selector de persona no es login. La persistencia local puede borrarse con los datos del navegador. Los archivos no se suben a un servidor.
+
+La extracción del ejemplo es una simulación declarada; archivos arbitrarios requieren completar datos. El asistente usa búsqueda y reglas, no IA conectada. Reservas, compras y renovaciones se registran para organizar gestiones; no se ejecutan con terceros. Los esquemas de vacunas, representación jurídica de menores/adultos dependientes y autorización de datos reales requieren diseño y validación posteriores. Transporte externo no está implementado. No prometer completitud de producto productivo ni seguridad clínica por pasar pruebas del prototipo.
 
 ## Dirección del rediseño — propuesta
 
@@ -102,10 +116,10 @@ Calendario: crear/editar/reprogramar/cancelar; registrar responsable; preparar c
 
 ## Pruebas y prioridades
 
-1. Corregir coherencia de permisos, trazabilidad y acciones simuladas.
-2. Completar calendario y recorrido documento a pendiente.
-3. Completar medicamentos/reposición y coordinación familiar.
-4. Unificar español y accesibilidad táctil; revisar tamaños, teclado, scroll y estados vacíos.
+1. Mantener la coherencia implementada de permisos y trazabilidad ante nuevas funciones.
+2. Evaluar con usuarios el calendario y el recorrido documento a pendiente implementados.
+3. Evaluar mantenimiento del inventario y claridad de la coordinación familiar.
+4. Revisar en iPhone físico teclado, scroll, legibilidad y accesibilidad táctil.
 5. Probar con familiares/cuidadores: encontrar turno, crear pendiente desde indicación, corregir existencias, repartir tarea y restringir documento.
 6. Registrar finalización sin ayuda, errores, retrocesos y comprensión del resultado; iterar.
 
@@ -118,7 +132,7 @@ Equipo Vercel: `juancortabarrias-projects` (`team_WohC5HtK35faU6BdNXiUqbpU`). Ac
 
 Configuración: Root Directory `prototype`, Framework Other, Output Directory `public`, sin instalación ni compilación. Así se publica únicamente el contenido de `prototype/public`; los documentos de proyecto y pruebas quedan fuera del sitio.
 
-Desarrollo local: desde raíz, `python3 -m http.server 8000 --directory prototype/public`. Test móvil: con Playwright disponible, `node prototype/tests/mobile.cjs` (variable opcional `PLAYWRIGHT_MODULE` para indicar ubicación del paquete). El test admite `NIDO_URL` para comprobar un deployment. La prueba es de carga y tamaño, no de aceptación integral.
+Desarrollo local: desde raíz, `python3 -m http.server 8000 --directory prototype/public`. Test móvil: con Playwright disponible, `node prototype/tests/mobile.cjs` (variable opcional `PLAYWRIGHT_MODULE` para indicar ubicación del paquete). El test admite `NIDO_URL` para comprobar un deployment. Prueba de carga y tamaño: `prototype/tests/mobile.cjs`. Recorridos principales: `prototype/tests/scenarios.cjs`. Casos adicionales de privacidad y cuidado: `prototype/tests/privacy-and-care.cjs`. Todos requieren Playwright con WebKit; `PLAYWRIGHT_MODULE` puede indicar el paquete. `scenarios.cjs` admite `NIDO_URL` para verificar el enlace publicado.
 
 No publicar datos de pacientes reales ni credenciales en esta demostración. No cambiar otros proyectos Vercel ni asumir que la landing histórica es este prototipo. URL pública: https://nido-prototipo-iphone.vercel.app. Primer despliegue confirmado READY en producción desde el commit `76cfa7f`, por integración Git; sin autenticación Vercel para abrir la demo. Nuevos pushes a main actualizan el sitio.
 

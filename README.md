@@ -16,4 +16,6 @@ Desde la raíz del repositorio: `python3 -m http.server 8000 --directory prototy
 
 Para Vercel: importar este repositorio, elegir **Other**, usar **Root Directory: prototype** y **Output Directory: public**, sin comandos de instalación ni compilación. El proyecto `nido-prototipo-iphone` está conectado a `main`; los nuevos commits generan despliegues automáticamente.
 
-Es una demostración con datos ficticios. Las funciones de IA, reservas, compras y avisos externos están simuladas; los cambios se pierden al recargar. El rediseño completo está pendiente.
+Elegí un perfil desde el botón superior: **Sofía** (administradora), **Antonio** (abuelo), **Rosa** (cuidadora) o **Lucía** (hija). Cada perfil tiene su propia vista. Antonio conserva un resultado confidencial que no aparece para Sofía.
+
+Demostración con datos ficticios y cambios persistidos en este navegador. Calendario, documentos, pendientes, inventario y permisos son interactivos. No hay autenticación ni backend: los permisos representan la experiencia de producto, no seguridad para información clínica real. IA, reservas y notificaciones externas no están conectadas.

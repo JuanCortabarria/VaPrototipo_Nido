@@ -45,6 +45,10 @@ Prototipo navegable exclusivamente orientado a celulares iPhone y accesible desd
 
 **Medicación a reposición:** revisar cantidad y vencimientos → corregir información → preparar lista de reposición o gestión de receta → registrar resolución. La cantidad es registrada o estimada, no una medición automática del botiquín.
 
+## Experiencias por usuario
+
+La demo presenta a Sofía (administradora), Antonio (abuelo), Rosa (cuidadora) y Lucía (hija). Antonio y Lucía solo ven sus propios registros; Rosa accede al cuidado autorizado. Sofía organiza los registros familiares compartidos, pero no ve documentos que Antonio mantiene privados. El resultado confidencial de ejemplo y sus actividades relacionadas solo aparecen para Antonio hasta que él decida compartirlos. Los datos son ficticios y la separación de vistas no reemplaza autenticación real.
+
 ## Principios
 
 - Facilidad de uso: carga progresiva, lenguaje claro, acciones corregibles y contexto de la persona siempre visible.
