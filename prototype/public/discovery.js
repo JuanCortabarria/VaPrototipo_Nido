@@ -1,9 +1,31 @@
 // Research-driven flows: document retrieval, follow-through and continuity of care.
-function documentKinds(){return [...new Set(['Informe de consulta','Resultado','Indicación','Orden','Receta','Carné','Documento',...visible(db.documents).map(d=>d.kind)])]}
-function documentLibrary(){
- const docs=filtered(db.documents).filter(d=>(d.title+' '+d.text).toLocaleLowerCase().includes(docQuery.toLocaleLowerCase())).filter(d=>!docType||d.kind===docType).filter(d=>!docFrom||(d.date&&d.date>=docFrom)).filter(d=>!docTo||(d.date&&d.date<=docTo)).sort((a,b)=>(b.date||'').localeCompare(a.date||''));
- return `<div class="page-title between"><div><h1>Documentos</h1><p>Encontrá la fuente cuando la necesites.</p></div>${allowedPatients().length?button(icon('plus'),'upload','','iconbtn'):''}</div>${chips()}<form id="document-filters"><label class="sr-only" for="doc-query">Buscar documentos</label><div class="search">${icon('search')}<input id="doc-query" name="query" placeholder="Título o contenido" type="search" value="${esc(docQuery)}"></div><label>Tipo de documento</label><select name="kind"><option value="">Todos los tipos</option>${documentKinds().map(k=>`<option ${docType===k?'selected':''}>${esc(k)}</option>`).join('')}</select><div class="inline"><div><label>Desde</label><input name="from" type="date" value="${docFrom}"></div><div><label>Hasta</label><input name="to" type="date" value="${docTo}"></div></div><div class="actions"><button class="btn">Buscar</button>${button('Limpiar','clear-document-filters','','btn quiet')}</div></form><div class="section-title">${docs.length} ${docs.length===1?'documento':'documentos'}</div>${docs.map(docCard).join('')||empty('Sin resultados','Probá con otra persona, tipo o intervalo de fechas.')}`;
+function documentKinds(){return [...new Set(['Informe de consulta','Resultado','Indicación','Orden','Receta','Carné','Documento',...validityTypes().map(t=>t.name),...visible(db.documents).map(d=>d.kind)])]}
+// Filters apply as they change; the results area is refreshed without re-rendering the form,
+// so typing keeps focus and the iOS clear (✕) button immediately shows everything again.
+function filteredDocuments(){return filtered(db.documents).filter(d=>(d.title+' '+d.text).toLocaleLowerCase().includes(docQuery.toLocaleLowerCase())).filter(d=>!docType||d.kind===docType).filter(d=>!docFrom||(d.date&&d.date>=docFrom)).filter(d=>!docTo||(d.date&&d.date<=docTo)).sort((a,b)=>(b.date||'').localeCompare(a.date||''))}
+const docFilterCount=()=>[docType,docFrom,docTo].filter(Boolean).length;
+const docFilterLabel=()=>docFilterCount()?`Filtros (${docFilterCount()})`:'Filtros';
+function activeDocFilters(){const a=[];if(filter!=='all'&&people[filter])a.push(['person',people[filter].name]);if(docQuery)a.push(['query',`«${docQuery}»`]);if(docType)a.push(['kind',docType]);if(docFrom)a.push(['from','Desde '+dateLabel(docFrom)]);if(docTo)a.push(['to','Hasta '+dateLabel(docTo)]);return a}
+function docResults(){
+ const docs=filteredDocuments(),active=activeDocFilters();
+ return `${active.length?`<div class="active-filters" aria-label="Filtros activos">${active.map(([k,t])=>`<button type="button" class="chip removable" data-action="remove-doc-filter" data-id="${k}" aria-label="Quitar filtro ${esc(t)}">${esc(t)}${icon('close')}</button>`).join('')}<button type="button" class="link-button" data-action="clear-document-filters">Quitar filtros</button></div>`:''}<div class="section-title">${docs.length} ${docs.length===1?'documento':'documentos'}</div>${docs.map(docCard).join('')||`<div class="empty"><h3>Sin resultados</h3><p>No hay documentos con estos filtros.</p>${active.length?button('Quitar filtros','clear-document-filters','','btn'):''}</div>`}`;
 }
+function documentLibrary(){
+ const head=`<div class="page-title between"><div><h1>Documentos</h1><p>Encontrá la fuente cuando la necesites.</p></div>${allowedPatients().length?button(icon('plus'),'upload','','iconbtn'):''}</div><div class="seg" role="tablist">${button('Archivo','doc-view','archive',docView==='archive'?'active':'')}${button('Vigencias','doc-view','validity',docView==='validity'?'active':'')}</div>`;
+ if(docView==='validity')return head+validityPage();
+ const n=docFilterCount();
+ return `${head}${chips()}<form id="document-filters" class="doc-filters" autocomplete="off"><div class="search-row"><div class="search"><label class="sr-only" for="doc-query">Buscar documentos</label>${icon('search')}<input id="doc-query" name="query" placeholder="Buscar documentos" type="search" enterkeyhint="search" value="${esc(docQuery)}"></div><button type="button" class="btn quiet filter-toggle ${n?'has-active':''}" data-action="toggle-doc-filters" aria-expanded="${docFiltersOpen}" aria-controls="doc-filter-panel">${icon('filter')}<span id="doc-filter-label">${docFilterLabel()}</span></button></div><div id="doc-filter-panel" class="filter-panel" ${docFiltersOpen?'':'hidden'}><label for="doc-kind">Tipo de documento</label><select id="doc-kind" name="kind"><option value="">Todos los tipos</option>${documentKinds().map(k=>`<option ${docType===k?'selected':''}>${esc(k)}</option>`).join('')}</select><fieldset class="date-range"><legend>Fecha del documento</legend><div class="inline"><div><label for="doc-from">Desde</label><input id="doc-from" name="from" type="date" value="${docFrom}"></div><div><label for="doc-to">Hasta</label><input id="doc-to" name="to" type="date" value="${docTo}"></div></div></fieldset></div></form><div id="doc-results" aria-live="polite">${docResults()}</div>`;
+}
+function readDocFilters(form,warn){
+ const v=Object.fromEntries(new FormData(form).entries()),before=[docQuery,docType,docFrom,docTo].join('|');
+ docQuery=(v.query||'').trim();docType=v.kind||'';docFrom=v.from||'';docTo=v.to||'';
+ if(warn&&docFrom&&docTo&&docFrom>docTo)toast('La fecha «Desde» debe ser anterior a «Hasta».');
+ // A blur-triggered change with no new value must not replace the button being tapped.
+ if(before===[docQuery,docType,docFrom,docTo].join('|'))return;
+ const results=$('#doc-results');if(results)results.innerHTML=docResults();
+ const label=$('#doc-filter-label');if(label){label.textContent=docFilterLabel();label.parentElement.classList.toggle('has-active',docFilterCount()>0)}
+}
+for(const type of ['input','change'])document.addEventListener(type,e=>{const form=e.target.closest?.('#document-filters');if(form)readDocFilters(form,type==='change')});
 function trackingBlock(e){
  if(!e.tracking)return '';
  const t=e.tracking;
@@ -43,10 +65,7 @@ async function readDemoImage(file){
  return await new Promise((resolve,reject)=>{const r=new FileReader();r.onload=()=>resolve(r.result);r.onerror=()=>reject(Error('No se pudo leer la imagen.'));r.readAsDataURL(file)});
 }
 async function handleDiscoveryForm(form,f,v,s){
- if(form.id==='document-filters'){
-  if(v.from&&v.to&&v.from>v.to){toast('La fecha Desde debe ser anterior a Hasta.');return true}
-  docQuery=v.query.trim();docType=v.kind;docFrom=v.from;docTo=v.to;render();return true;
- }
+ if(form.id==='document-filters'){readDocFilters(form,true);document.activeElement?.blur?.();return true}
  if(form.id==='booking-form'){
   const e=db.events.find(e=>e.id===s.id);if(!can(e,'care')){denied();return true}
   if(!v.confirmed||!v.date||!v.time){toast('Completá y confirmá los datos del turno.');return true}
@@ -75,6 +94,9 @@ async function handleDiscoveryForm(form,f,v,s){
 }
 const discoveryActions={
  'clear-document-filters':()=>{docQuery='';docType='';docFrom='';docTo='';filter='all';render()},
+ 'remove-doc-filter':k=>{if(k==='person')filter='all';if(k==='query')docQuery='';if(k==='kind')docType='';if(k==='from')docFrom='';if(k==='to')docTo='';render()},
+ 'toggle-doc-filters':()=>{docFiltersOpen=!docFiltersOpen;const panel=$('#doc-filter-panel'),btn=document.querySelector('[data-action="toggle-doc-filters"]');if(panel)panel.hidden=!docFiltersOpen;if(btn)btn.setAttribute('aria-expanded',docFiltersOpen)},
+ 'doc-view':v=>{docView=v==='validity'?'validity':'archive';render()},
  'confirm-booking':eid=>open('booking',eid),
  'init-preparation':eid=>{const e=db.events.find(e=>e.id===eid);if(!can(e,'care'))return denied();if(e.preparation?.length)return;e.preparation=['Revisar documentos para llevar','Consultar si requiere autorización','Organizar traslado o acompañamiento','Confirmar preparación con el prestador'].map(text=>({id:id(),text,done:false}));log(e,'Armó lista de preparación para revisar');render()},
  'add-preparation':eid=>open('preparation-add',eid),

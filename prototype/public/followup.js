@@ -32,12 +32,12 @@ function followupSheet(s){
  }
  if(s.type==='edit-document'){
   const d=db.documents.find(d=>d.id===s.id);if(!can(d)){denied();return true}
-  sheet('Completar documento',`<p>El archivo original se conserva.</p><form id="document-edit-form"><label>Título (opcional)</label><input name="title" value="${esc(d.title)}"><label>Tipo</label><select name="kind">${documentKinds().map(k=>`<option ${k===d.kind?'selected':''}>${esc(k)}</option>`).join('')}</select><label>Fecha del documento (opcional)</label><input type="date" name="date" value="${d.date||''}"><label>Contenido o nota (opcional)</label><textarea name="text">${esc(d.text)}</textarea><button class="btn full">Guardar datos</button></form>`);return true;
+  sheet('Completar documento',`<p>El archivo original se conserva.</p><form id="document-edit-form"><label>Título (opcional)</label><input name="title" value="${esc(d.title)}"><label>Tipo</label><select name="kind">${documentKinds().map(k=>`<option ${k===d.kind?'selected':''}>${esc(k)}</option>`).join('')}</select><label>Fecha del documento (opcional)</label><input type="date" name="date" value="${d.date||''}">${expiryFields(d)}<label>Contenido o nota (opcional)</label><textarea name="text">${esc(d.text)}</textarea><button class="btn full">Guardar datos</button></form>`);return true;
  }
  return false;
 }
 function followupForm(form,f,v,s){
- if(form.id==='document-edit-form'){const d=db.documents.find(d=>d.id===s.id);if(!can(d)){denied();return true}Object.assign(d,{title:v.title.trim()||d.filename||'Documento sin título',kind:v.kind,date:v.date,text:v.text.trim(),needsDetails:false});log(d,'Actualizó datos del documento');open('document',d.id);render();return true}
+ if(form.id==='document-edit-form'){const d=db.documents.find(d=>d.id===s.id);if(!can(d)){denied();return true}Object.assign(d,{title:v.title.trim()||d.filename||'Documento sin título',kind:v.kind,date:v.date,expires:expiryValue(v),text:v.text.trim(),needsDetails:false});log(d,'Actualizó datos del documento');open('document',d.id);render();return true}
  if(['unable-form','reassign-form','repeat-form'].includes(form.id)){
   const e=db.events.find(e=>e.id===s.id);if(!can(e,'care')||e.status!=='pending'){denied();return true}
   if(form.id==='unable-form'){
