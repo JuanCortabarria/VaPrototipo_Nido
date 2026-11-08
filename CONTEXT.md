@@ -1,6 +1,6 @@
 # Nido — contexto de trabajo
 
-Actualizado: 29 de octubre de 2026. Este archivo reúne estado, decisiones, evidencia y operación. IDEA.md explica el producto; README.md sirve de entrada. Evitar duplicar decisiones en documentos paralelos.
+Actualizado: 8 de noviembre de 2026 (ronda 1 de feedback en iPhone). Este archivo reúne estado, decisiones, evidencia y operación. IDEA.md explica el producto; README.md sirve de entrada. Evitar duplicar decisiones en documentos paralelos.
 
 ## Proyecto y equipo
 
@@ -97,7 +97,7 @@ Escenario pedido por el usuario: Antonio tiene un resultado ficticio de anatomí
 - Recordatorio con anticipación y destinatario; solo configuración de demo. Preguntas para la consulta y acceso a documento fuente.
 - Carga de imagen/PDF ficticio de hasta 1 MB, revisión de datos manual o ejemplo preparado, confirmación y creación de pendiente vinculado.
 - Visibilidad del documento propagada a las tareas vinculadas. Accesos reevaluados al abrir registros.
-- Medicamentos con cantidades por caja, vencimientos de caja/receta separados, corrección de existencias, lista de reposición, registro de compra y pendiente de renovación.
+- Medicamentos con cantidades por caja, vencimientos de caja/receta separados, edición de cajas, lista de compras («Marcar para comprar»), «Agregar caja» y pendiente de renovación.
 - Notas de cuidado con autor/fecha y registro manual de vacunas, sin recomendación sanitaria automática.
 - Solicitud de acceso de Sofía, aceptación por Antonio, autorización de cuidadora y revocación; historial de permisos para el titular.
 - Asistente de búsqueda sobre datos visibles. Sin interpretación médica ni respuestas que revelen registros privados.
@@ -106,8 +106,8 @@ Escenario pedido por el usuario: Antonio tiene un resultado ficticio de anatomí
 ### Ampliación de medicamentos, permisos y agenda simple
 
 - Inventario por cajas ordenadas por fecha. Cantidades separadas: fecha vigente, vencida y sin registrar; no se presentan todas como disponibles para tratamiento.
-- Retiro de caja con motivo e historial y restauración del registro. La cantidad total activa excluye cajas retiradas.
-- Búsqueda y filtros Todos, Revisar, Recetas y Reposición. Umbral de revisión de cantidad y días de aviso de receta configurables por medicamento.
+- Eliminación de caja con confirmación, motivo opcional, «Deshacer» temporal y registro en el historial (reemplazó al retiro/restauración en la ronda 1 de feedback). La cantidad total activa excluye cajas eliminadas.
+- Búsqueda y filtros Todos, Revisar, Recetas y Para comprar. Umbral de revisión de cantidad y días de aviso de receta configurables por medicamento.
 - Flujo de renovación: pendiente de coordinar → consulta coordinada → nueva receta registrada. Reutiliza un único pendiente activo por medicamento; registrar una nueva receta cierra la gestión y conserva el vencimiento anterior en el historial. Iniciar la gestión no extiende su vigencia.
 - Fecha desconocida explícita, sin inventar vencimientos; edición de datos sin alterar las cantidades de las cajas. No valida legalmente la receta ni calcula dosis o días de tratamiento.
 - Antonio entra en Hoy/Mañana y próximas actividades con tipografía mayor, con opción de abrir calendario completo y volver a la vista simple.
@@ -175,8 +175,8 @@ Esta matriz distingue necesidades reportadas en la síntesis de entrevistas, ori
 | --- | --- | --- |
 | Indicaciones que quedan sin agendar — síntesis de entrevistas | Documento → pendiente → inicio de gestión anticipado → turno confirmado; misma fuente e historial | Navegable y probado. Ver si la familia distingue objetivo, inicio de gestión y fecha confirmada |
 | Preparar consultas — propuesta de coordinación y decisión del usuario | Lista editable: documentos, autorización, traslado e indicaciones ingresadas; responsable de cada cambio | Navegable y probado. No genera preparación médica; confirmar utilidad con entrevistados |
-| Papeles e información difíciles de recuperar — síntesis de entrevistas | Filtros por persona, fechas y tipo; documento y fuente original | Navegable y probado. Ejemplos sin archivo se identifican como texto; medir recuperación sin ayuda |
-| Recetas vencidas y falta de existencias — síntesis de entrevistas | Cajas, vencimientos, corrección, reposición y renovación separadas | Navegable y probado. Inventario manual por persona; sin ubicaciones por decisión del usuario |
+| Papeles e información difíciles de recuperar — síntesis de entrevistas | Filtros por persona, fechas y tipo que se aplican al instante; tabla de vigencias por integrante; documento y fuente original | Navegable y probado. Ejemplos sin archivo se identifican como texto; medir recuperación sin ayuda |
+| Recetas vencidas y falta de existencias — síntesis de entrevistas | Cajas identificadas por vencimiento, caja abierta, edición/eliminación, lista de compras y renovación separadas | Navegable y probado. Inventario manual por persona; sin ubicaciones por decisión del usuario |
 | Continuidad entre cuidadores — síntesis y orientación experta | Observación, momento de lo ocurrido, acción realizada, autor, momento del registro y foto opcional | Navegable y probado. Comprobar que el siguiente cuidador entiende qué pasó y qué falta |
 | Reparto informal de gestiones — síntesis de entrevistas | Asignación directa y registro de cumplimiento con historial | Navegable. Pendiente decidir cómo resolver una tarea que el responsable no puede hacer |
 | Confidencialidad — orientación experta y decisión del usuario | Categorías, excepciones privadas y revocación en vistas relacionadas | Simulado con datos ficticios. Falta seguridad de servidor y definición de representantes |
@@ -223,7 +223,7 @@ Equipo Vercel: `juancortabarrias-projects` (`team_WohC5HtK35faU6BdNXiUqbpU`). Ac
 
 Configuración: Root Directory `prototype`, Framework Other, Output Directory `public`, sin instalación ni compilación. Así se publica únicamente el contenido de `prototype/public`; los documentos de proyecto y pruebas quedan fuera del sitio.
 
-Desarrollo local: desde raíz, `python3 -m http.server 8000 --directory prototype/public`. Test móvil: con Playwright disponible, `node prototype/tests/mobile.cjs` (variable opcional `PLAYWRIGHT_MODULE` para indicar ubicación del paquete). El test admite `NIDO_URL` para comprobar un deployment. Prueba de carga y tamaño: `prototype/tests/mobile.cjs`. Recorridos principales: `prototype/tests/scenarios.cjs`. Casos adicionales de privacidad y cuidado: `prototype/tests/privacy-and-care.cjs`. Todos requieren Playwright con WebKit; `PLAYWRIGHT_MODULE` puede indicar el paquete. `scenarios.cjs` y `medication-and-categories.cjs` admiten `NIDO_URL` para verificar el enlace publicado. La prueba nueva cubre cajas, renovación, categorías, agenda simple y comentarios.
+Desarrollo local: desde raíz, `python3 -m http.server 8000 --directory prototype/public`. Test móvil: con Playwright disponible, `node prototype/tests/mobile.cjs` (variable opcional `PLAYWRIGHT_MODULE` para indicar ubicación del paquete). El test admite `NIDO_URL` para comprobar un deployment. Prueba de carga y tamaño: `prototype/tests/mobile.cjs`. Recorridos principales: `prototype/tests/scenarios.cjs`. Casos adicionales de privacidad y cuidado: `prototype/tests/privacy-and-care.cjs`. Ronda 1 de feedback: `prototype/tests/feedback-round-1.cjs` (variable opcional `SHOTS` para guardar capturas). Todos requieren Playwright con WebKit; `PLAYWRIGHT_MODULE` puede indicar el paquete. `scenarios.cjs` y `medication-and-categories.cjs` admiten `NIDO_URL` para verificar el enlace publicado. La prueba nueva cubre cajas, renovación, categorías, agenda simple y comentarios.
 
 No publicar datos de pacientes reales ni credenciales en esta demostración. No cambiar otros proyectos Vercel ni asumir que la landing histórica es este prototipo. URL pública: https://nido-prototipo-iphone.vercel.app. Primer despliegue confirmado READY en producción desde el commit `76cfa7f`, por integración Git; sin autenticación Vercel para abrir la demo. Nuevos pushes a main actualizan el sitio.
 
@@ -240,3 +240,19 @@ Solicitud del usuario: distinguir mejor los controles con colores y poblar a Ant
 Se conserva Losartán 50 mg del ejemplo anterior y se agregan Metformina y Atorvastatina como registros ficticios, sin pautas de dosis nuevas ni atribución de diagnósticos. Horarios de demostración 09:00, 13:00 y 22:00, durante 14 días desde la incorporación del ejemplo. No constituyen tratamiento recomendado. La actualización se aplica una vez, preserva datos existentes y mantiene Fernando vacío; restablecer la demo vuelve a generar sus ejemplos.
 
 Pruebas: tres medicamentos/tres actividades diarias de Antonio, persistencia sin duplicados, finalización individual, anchos móviles y revisión visual; regresiones de perfiles, inventario y Fernando aprobadas. Se separaron las tomas de las gestiones de renovación: registrar nueva receta no completa tomas pendientes. Avisos y datos siguen simulados.
+
+## Ronda 1 de feedback en iPhone
+
+Sesión sobre `main` @ `b337572` en iPhone/Safari (capturas IMG_4789–IMG_4794). La bitácora para el equipo, sin lenguaje técnico, se lleva fuera del repositorio (Drive). Siete hallazgos implementados:
+
+- **F1 Documentos — filtros de fecha desalineados.** Campos de fecha con apariencia nativa reiniciada para que no desborden en iOS. Visibles solo buscador y chips de persona; tipo y «Fecha del documento» (Desde/Hasta) quedan en el botón «Filtros (n)».
+- **F2 Documentos — volver a ver todo.** Los filtros se aplican al cambiarlos (sin «Buscar»); vaciar el buscador restaura la lista. Filtros activos como chips con ✕ y «Quitar filtros» sobre los resultados y en el estado vacío. Un `change` por pérdida de foco sin valor nuevo no redibuja resultados, para no perder el toque en «Quitar filtros».
+- **F3 Asistente — horizonte de tiempo.** Preguntas sobre pendientes, avisos, turnos, hoy, mañana o semana muestran por defecto los próximos 7 días, agrupados en Hoy/Mañana/Resto y ordenados por fecha y hora. Chips: Próximos 2 días, Esta semana (7), Este mes (30) y Todo. Cada rutina aparece una vez por serie («todos los días 09:00, hasta…»). Atrasados y Sin fecha plegados al final; «Hay N actividades más · Ver más». La caja de texto queda al final del área desplazable, sin contenido debajo.
+- **F4 Medicamentos — diferenciar cajas.** Resumen: total y cantidad de cajas, cuál vence primero, cuál está abierta y cajas con fecha vencida. Lista compacta identificada por vencimiento, sin número de caja. Estados: Vigente, Vence en N días, Vencida, Sin fecha. Campo nuevo `opened` por caja, con «Marcar como abierta» y casilla en la edición.
+- **F5 Medicamentos — editar y eliminar.** Botón «Editar» con ícono y papelera con color destructivo (44 × 44 px, `aria-label`). Eliminar pide confirmación nombrando la caja por su vencimiento, motivo opcional, aviso con «Deshacer» durante 7 segundos y registro en el historial. Se quitó la sección «Cajas retiradas».
+- **F6 Medicamentos — lenguaje de compra.** «Agregar caja», «Marcar para comprar» y «Quitar de la lista de compras»; etiqueta, filtro, contador y chip del asistente usan «Para comprar». Una línea explica el circuito. Agregar una caja quita el medicamento de la lista.
+- **F7 Documentos — vigencias.** Sub-pestaña «Archivo | Vigencias»: fila por tipo, columna por integrante; celda con color, símbolo y fecha corta. Estados: vigente, vence pronto (3 meses, configurable 1–12), vencido, falta cargar, no aplica y sin acceso. Documentos con vencimiento opcional o «No vence» (`expires`). Tocar abre el documento o la carga con persona y tipo completos. Documento vencido o por vencer ofrece «Crear pendiente para renovar». Sofía configura tipos y a quién aplican. Ejemplos ficticios para Sofía, Antonio, Lucía y Mateo; Fernando sigue vacío. Privacidad: los documentos «Solo yo» de otra persona no cuentan, y sin permiso la celda muestra «Sin acceso». Nido no calcula vencimientos.
+
+Decisiones pendientes aplicadas con la opción recomendada, a confirmar por el equipo: 7 días por defecto con chips (F3); «Abierta» marcada a mano (F4); eliminar con deshacer e historial, motivo opcional (F5); textos de F6 elegidos por Claude; vigencias dentro de Documentos con cuatro tipos iniciales (F7).
+
+Validación: `feedback-round-1.cjs` cubre filtros en vivo y reinicio, alineación de fechas, primer resultado visible, tabla de vigencias y privacidad (Antonio, Sofía, Lucía), carga desde celda, renovación, rango del asistente sin rutinas repetidas, resumen y acciones de cajas, deshacer, lista de compras y anchos de 375/390/430 px. Regresiones aprobadas salvo `routines-and-fernando.cjs`, que ya fallaba antes de esta ronda al leer el texto de un `<select>` en WebKit. Pendiente: iPhone físico y segunda ronda con las tareas de la bitácora.
