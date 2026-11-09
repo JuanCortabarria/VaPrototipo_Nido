@@ -1,0 +1,14 @@
+/* Conversation stays between a stable heading and an always available composer. */
+.main.chat-main{display:flex;flex-direction:column;overflow:hidden;padding-bottom:0}
+.chat-heading{flex:none;padding-bottom:12px;border-bottom:1px solid var(--line)}
+.chat-heading h1{font-size:27px}.chat-heading p{font-size:12px;color:var(--muted);margin:4px 0 10px}
+.chat-tools{display:flex;gap:8px}.chat-tools .btn{font-size:12px;min-height:44px;padding:8px 12px}.chat-tools .btn:first-child{flex:1}.chat-tools .icon{width:17px;height:17px}
+.chat-messages{overflow-y:auto;overflow-x:hidden;flex:1;min-height:0;padding:12px 0 16px;overscroll-behavior:contain;position:relative}
+.chat-welcome{padding:20px 0}.chat-welcome h2{font-size:23px;margin:14px 0 8px}.chat-welcome p{font-size:14px;color:var(--muted)}
+.chat-suggestions{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}.chat-suggestions .chip{white-space:normal;text-align:left}
+.chat-message{margin:14px 0;overflow-wrap:anywhere}.chat-speaker{display:block;font-size:10px;font-weight:600;color:var(--muted);margin:0 3px 4px}.from-user .chat-speaker{text-align:right}
+.chat-message .bubble{margin:0}.chat-message .bubble.user{margin-left:32px}.chat-message .attachment{font-size:13px}
+.chat-composer{flex:none;background:var(--cream)}.chat-demo{font-size:10px;display:block;text-align:center;padding:7px 0 0}
+.chat-composer .chat-form{position:static;margin:0;box-shadow:none;padding:8px 0 12px}.chat-form .btn{padding:12px;min-width:48px}.chat-form input{padding:12px}
+.conversation-choice strong{display:block;font-size:14px;overflow-wrap:anywhere}
+@media(max-height:650px){.chat-heading p{display:none}.chat-heading h1{font-size:22px;margin-bottom:8px}.chat-heading{padding-bottom:8px}.chat-welcome{padding:8px 0}}

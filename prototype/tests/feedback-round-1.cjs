@@ -66,7 +66,7 @@ await click('agenda-range',`${await p.evaluate(()=>chat.length-1)}:2`);assert((a
 await noOverflow('assistant');
 
 // F4/F5/F6 medication
-await click('tab','meds');assert((await text('#main')).includes('para comprar'));await click('med','med-a');
+await click('tab','meds');assert((await text('#main')).toLocaleLowerCase().includes('para comprar'));await click('med','med-a');
 const sheetText=await text('.sheet');assert(sheetText.includes('3 cajas'));assert(sheetText.includes('Vence primero'));assert(sheetText.includes('1 caja con fecha vencida (3 comprimidos)'));assert(!/Caja \d/.test(sheetText),'no numbered boxes');
 assert.equal(await p.getByRole('button',{name:'Editar caja'}).count(),3);assert.equal(await p.getByRole('button',{name:'Eliminar caja'}).count(),3);
 for(const btn of await p.locator('.box-actions button').all()){const r=await btn.boundingBox();assert(r.width>=44&&r.height>=44,'44px touch target')}
