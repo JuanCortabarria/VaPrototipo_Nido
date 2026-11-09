@@ -43,3 +43,47 @@ function medsAnswer(){
 const assistantActions={
  'agenda-range':arg=>{const [i,r]=arg.split(':').map(Number),m=chat[i];if(!m||m.agenda===undefined)return;m.agenda=r;const main=$('#main'),top=main.scrollTop;render();$('#main').scrollTop=top}
 };
+
+// Conversation messages belong to the active demo profile. Answers are rebuilt from
+// current permissions whenever displayed, rather than replaying stored record HTML.
+let conversationActor=null,conversationId=null;
+function conversationReply(q,range){
+ const term=q.toLocaleLowerCase();let html='',agenda;
+ if(/grave|diagn[oó]st|tratamiento|qu[eé] significa/.test(term))html='Puedo recuperar la fuente y ayudarte a guardar una pregunta para tu consulta. La interpretación de resultados corresponde al profesional tratante.';
+ else if(/medic|stock|reposici|comprar|compras/.test(term))html=medsAnswer();
+ else if(/documento|informe/.test(term))html=visible(db.documents).map(d=>button(`${esc(d.title)} · ${people[d.owner].name}`,'document',d.id,'attachment')).join('');
+ else if(isAgendaQuestion(term))agenda=range??agendaRangeFor(term);
+ else if(/^(hola|buenas|buenos d[ií]as)[.! ]*$/.test(term))html=`Hola, ${people[user].name}. ¿Querés revisar tu agenda o buscar algo entre tus documentos?`;
+ else if(/^(gracias|muchas gracias)[.! ]*$/.test(term))html='De nada. Podés seguir consultando en esta conversación.';
+ else html=visible(db.documents).filter(d=>(d.title+' '+d.text).toLocaleLowerCase().includes(term)).map(d=>button(`${esc(d.title)} · ${people[d.owner].name}`,'document',d.id,'attachment')).join('');
+ return agenda!==undefined?{agenda}:{html:html||'No encontré resultados en la información disponible para tu perfil. Probá con otro término.'};
+}
+function restoreConversation(){
+ db.assistantConversations??=[];db.assistantActive??={};
+ const active=db.assistantConversations.find(c=>c.id===db.assistantActive[user]&&c.actor===user);
+ conversationActor=user;conversationId=active?.id||null;
+ chat=active?active.messages.map(m=>({...m})):[];
+}
+function saveConversation(){
+ db.assistantConversations??=[];db.assistantActive??={};
+ let current=db.assistantConversations.find(c=>c.id===conversationId&&c.actor===user);
+ if(!current){current={id:id(),actor:user,createdAt:new Date().toISOString(),messages:[]};db.assistantConversations.push(current);conversationId=current.id;conversationActor=user}
+ current.title=chat.find(m=>m.role==='user')?.text.slice(0,90)||'Nueva conversación';current.updatedAt=new Date().toISOString();
+ current.messages=chat.map(m=>m.role==='user'?{role:'user',text:m.text}:{role:'ai',query:m.query,...(m.agenda!==undefined?{agenda:m.agenda}:{})});
+ db.assistantActive[user]=current.id;persist();
+}
+function newConversation(){
+ restoreConversation();delete db.assistantActive[user];conversationId=null;chat=[];persist();close();tab='chat';render();$('#chat-form input')?.focus();
+}
+function conversationHistory(){
+ restoreConversation();
+ const conversations=db.assistantConversations.filter(c=>c.actor===user).sort((a,b)=>b.updatedAt.localeCompare(a.updatedAt));
+ sheet('Conversaciones',`<p class="muted tiny">Tus conversaciones como ${people[user].name}</p>${button(icon('plus')+' Nueva conversación','chat-new','','btn full')}${conversations.map(c=>button(`<div class="grow"><strong>${esc(c.title)}</strong><small>${new Date(c.updatedAt).toLocaleDateString('es-UY',{day:'numeric',month:'short'})} · ${c.messages.filter(m=>m.role==='user').length} mensajes${c.id===conversationId?' · Abierta':''}</small></div>${icon('next')}`,'chat-open',c.id,'person-choice conversation-choice')).join('')||empty('Todavía no hay conversaciones','Las conversaciones se guardan cuando enviás el primer mensaje.')}`);
+}
+Object.assign(assistantActions,{
+ 'chat-new':newConversation,
+ 'chat-history':conversationHistory,
+ 'chat-open':cid=>{const c=db.assistantConversations?.find(c=>c.id===cid&&c.actor===user);if(!c)return;db.assistantActive??={};db.assistantActive[user]=c.id;persist();close();tab='chat';render();const log=$('#chat-messages');if(log)log.scrollTop=log.scrollHeight}
+});
+// Keep an adjusted agenda horizon when reopening the same conversation.
+assistantActions['agenda-range']=arg=>{const [i,r]=arg.split(':').map(Number),m=chat[i];if(!m||m.agenda===undefined)return;m.agenda=r;const top=$('#chat-messages')?.scrollTop||0;saveConversation();render();$('#chat-messages').scrollTop=top};

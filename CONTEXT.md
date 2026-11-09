@@ -1,6 +1,6 @@
 # Nido — contexto de trabajo
 
-Actualizado: 8 de noviembre de 2026 (ronda 1 de feedback en iPhone). Este archivo reúne estado, decisiones, evidencia y operación. IDEA.md explica el producto; README.md sirve de entrada. Evitar duplicar decisiones en documentos paralelos.
+Actualizado: 8 de noviembre de 2026 (ronda 2 de feedback UX). Este archivo reúne estado, decisiones, evidencia y operación. IDEA.md explica el producto; README.md sirve de entrada. Evitar duplicar decisiones en documentos paralelos.
 
 ## Proyecto y equipo
 
@@ -256,3 +256,27 @@ Sesión sobre `main` @ `b337572` en iPhone/Safari (capturas IMG_4789–IMG_4794)
 Decisiones pendientes aplicadas con la opción recomendada, a confirmar por el equipo: 7 días por defecto con chips (F3); «Abierta» marcada a mano (F4); eliminar con deshacer e historial, motivo opcional (F5); textos de F6 elegidos por Claude; vigencias dentro de Documentos con cuatro tipos iniciales (F7).
 
 Validación: `feedback-round-1.cjs` cubre filtros en vivo y reinicio, alineación de fechas, primer resultado visible, tabla de vigencias y privacidad (Antonio, Sofía, Lucía), carga desde celda, renovación, rango del asistente sin rutinas repetidas, resumen y acciones de cajas, deshacer, lista de compras y anchos de 375/390/430 px. Regresiones aprobadas salvo `routines-and-fernando.cjs`, que ya fallaba antes de esta ronda al leer el texto de un `<select>` en WebKit. Pendiente: iPhone físico y segunda ronda con las tareas de la bitácora.
+
+
+## Ronda 2 de feedback UX — 8 de noviembre de 2026
+
+Feedback recibido sobre el prototipo, conservado aquí como fuente de trabajo. Los mensajes originales tienen errores de transcripción; se agruparon las dos menciones de arqueo sin agregar requisitos clínicos:
+
+| Comentario recibido | Respuesta de diseño / alcance |
+| --- | --- |
+| Poder cambiar un evento, ver si se repite y con qué frecuencia, y elegir si actualizarlo siempre; editar resulta difícil. | Frecuencia visible y edición con alcance explícito: una ocurrencia o próximas repeticiones. Conservar historial de las realizadas. |
+| Poder hacer un arqueo de medicamentos y corregir el número porque la gente se va a olvidar. Mencionado dos veces. | Acción visible para actualizar stock con lo que realmente queda; no exigir registrar todas las tomas. Identificar medicamento e integrante y conservar fecha e historial del recuento. |
+| Un buen onboarding es fundamental. | **Pendiente para una etapa posterior. Fuera del alcance de este prototipo por decisión explícita del usuario.** Explorar una bienvenida breve por rol, elección de integrantes y primera tarea, con pruebas de comprensión sin explicación del equipo. No implementar ahora. |
+| Pantallas muy cargadas; los flujos principales deberían ser más sencillos. | Un objetivo y acción principal con texto por pantalla. Información avanzada, historial y opciones de demo en secciones desplegables. |
+| Calendario mensual tipo Google. | Mes como vista inicial, navegación entre meses, días con actividades y agenda del día seleccionado; mantener alternativa simple de Antonio. |
+| Chat más parecido a una conversación, con acceso a conversaciones viejas. | Conversación activa, nueva conversación e historial persistido por perfil; recuperar contenido con los permisos vigentes. |
+| Agregar un medicamento para alguien o actualizar stock debe entenderse sin guía. | Botones con texto y selección explícita de integrante, aprovechando el filtro de persona activo. |
+
+Criterio de validación: pedir a una persona que agregue un medicamento para un familiar, corrija lo que queda después de varios días, cambie el horario de una rutina, encuentre una actividad del próximo mes y retome una conversación anterior, sin indicaciones verbales. Comprobar en iPhone físico; las pruebas automatizadas solo verifican comportamiento y distribución de la interfaz.
+
+Trabajo en rama `ux/prototype-feedback-round-2`, para revisar mediante PR contra `main`. No publicar ni integrar automáticamente esta ronda.
+
+
+Implementación de la ronda 2: botones principales con texto en Calendario, Documentos y Medicamentos; formulario de actividad con detalles secundarios plegados; mes completo con actividades y acceso a agenda del día; arqueo por caja con cero válido, fecha de revisión e historial sin alterar registros de tomas; conversaciones por perfil persistidas, respuestas reconstruidas con permisos actuales; opciones del prototipo plegadas en Familia. El asistente continúa siendo una simulación, sin IA conectada.
+
+Validación automatizada: `stock-reconciliation.cjs` cubre agregar un medicamento para el integrante filtrado y corregir existencias sin modificar tomas; `calendar-ux.cjs` cubre mes, alcance de edición, frecuencias, historial y realizados; `assistant-conversations.cjs` y `conversation-ux.cjs` cubren guardar, abrir, recargar y aislar conversaciones por perfil, respetando permisos actuales. Los tests existentes usan los nuevos desplegables y selectores. Verificación en WebKit con anchos de 320–430 px y revisión de capturas. Pendiente validar comprensión sin guía con usuarios e iPhone físico.

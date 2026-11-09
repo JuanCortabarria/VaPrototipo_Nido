@@ -1,0 +1,8 @@
+/* Shared hierarchy: one labeled primary task, secondary tools disclosed on demand. */
+.task-heading{display:flex;flex-direction:column;align-items:stretch;gap:14px}
+.primary-task{margin-top:14px}
+.task-heading .primary-task{margin-top:0}
+.prototype-settings{margin-top:24px;border-top:1px solid var(--line);padding-top:8px}
+.prototype-settings .btn{margin-top:12px}
+.prototype-settings summary{color:var(--muted)}
+button.card.action{text-align:left;width:100%}
