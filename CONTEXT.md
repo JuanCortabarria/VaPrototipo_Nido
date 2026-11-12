@@ -298,3 +298,20 @@ Validación automatizada: `stock-reconciliation.cjs` cubre agregar un medicament
 ### Árbol familiar en Familia
 
 A pedido del usuario, Familia reemplaza la lista de nombres por un árbol visual de las generaciones ficticias de la demo: Antonio (abuelo), Sofía/Fernando (madre/padre), Lucía/Mateo (hijos). Cada tarjeta muestra avatar, nombre, parentesco y acceso al perfil. Solo se incluyen integrantes cuyo acceso ya está autorizado; Fernando conserva sus permisos independientes y Rosa no se representa como familiar. No se agregan permisos ni registros clínicos por parentesco. Los filtros por persona de Calendario, Documentos y Medicamentos conservan su presentación. El árbol es una representación de la familia de ejemplo; editar vínculos o incorporar integrantes queda fuera de esta iteración.
+
+## Rediseño tras las entrevistas del 11/11/2026
+
+Análisis completo, prioridades y referencias en `evidencia/analisis-entrevistas-2026-11-11.md`. Las capturas de línea de base están en `evidencia/capturas-prototipo-2026-11-12/`. Son dos sesiones guiadas con personas cercanas: sirven como evidencia de usabilidad y de modelo, no de demanda.
+
+Decisiones confirmadas por Juan el 12/11. Reemplazan las anteriores que contradicen:
+
+- Inicio en **Hoy**, no en Calendario.
+- Medicación: indicación ingresada por la persona → tomas programadas → «Tomada» descuenta stock con deshacer. La cantidad se maneja con +/−, sin cajas. Sigue sin recomendar dosis y registrar la toma no prueba que la persona la ingirió.
+- Permisos en tres niveles: agenda / información sensible / accionar medicación. Se mantiene «Solo yo» por documento. Un adulto puede designar un representante y queda registrado.
+- Antonio, en la vista simple: ve, marca y pide ayuda. No edita.
+- Avisos amplios por defecto con opción de apagarlos. Permisos restrictivos por defecto.
+- Documentos sin vencimiento. Vencimientos aparte y solo cuando aplican.
+- Asistente que organiza gestiones y encuentra documentos, sin interpretar.
+- Nuevo prototipo en Claude Design: 4 o 5 recorridos profundos, más pantallas conceptuales de farmacia, acompañante, WhatsApp y gráfica de valores.
+
+Prompt para el nuevo prototipo: `diseno/prompt-claude-design.md`. Para la demo, Fernando pasa a ser pareja de Sofía y papá de Lucía y Mateo, y deja de ser un perfil vacío.
