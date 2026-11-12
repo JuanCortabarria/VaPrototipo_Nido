@@ -1,6 +1,6 @@
 # Prompt para Claude Design — Nido v2
 
-> Cómo usarlo: copiá todo desde «Diseñá un prototipo…» hasta el final y adjuntá 6 a 8 capturas de `evidencia/capturas-prototipo-2026-11-12/` como antirreferencia. Sugeridas: 02, 06, 15, 20, 23, 28 y 34.
+> Cómo usarlo: en Claude Design elegí el modelo **Fable 5.2**. Copiá todo desde «Diseñá un prototipo…» hasta el final y adjuntá 6 a 8 capturas de `evidencia/capturas-prototipo-2026-11-12/` como antirreferencia. Sugeridas: 02, 06, 15, 20, 23, 28 y 34. El detalle de las apps de referencia está en `diseno/referencias-apps.md`.
 
 ---
 
@@ -41,6 +41,29 @@ El prototipo anterior tenía todas las funciones, pero era recargado, confuso y 
 - **Cada persona tiene un color de avatar** y **cada tipo de actividad tiene un ícono** (SF Symbols o equivalente). El color nunca es el único indicador: siempre va acompañado de texto o ícono.
 - Contraste AA como mínimo, compatible con Dynamic Type. Modo claro obligatorio; el modo oscuro es opcional.
 - Sin textos legales en las pantallas. Las aclaraciones van en un ícono ⓘ o en un pie discreto, solo donde haga falta.
+
+### Patrones tomados de apps reales
+
+Aplicá estos patrones; vienen de apps que resuelven bien cada problema.
+
+**Recordatorios (Due, Things 3 y las pautas de notificaciones de Apple)**
+- Hoy se agrupa en **Mañana · Tarde · Noche**. En cada bloque, primero lo que tiene hora fija. Una tarea puede tener «para cuándo» sin hora («Renovar receta · antes del viernes»).
+- Notificaciones con botones: **Tomada · Posponer · No puedo** para tomas, **Ver preparación · No puedo** para consultas.
+- Si nadie responde, el aviso se repite a los 15 y a los 30 minutos y se corta apenas alguien marca la tarea. Posponer ofrece 10 min, 30 min y 1 h.
+- Los avisos son relativos a la actividad («1 hora antes»): si se reprograma, el aviso se mueve solo.
+- Un **resumen de la mañana** con el día, en lugar de muchos avisos sueltos. Tomas y consultas son sensibles al tiempo; el resto, normales.
+
+**Medicamentos (Medisafe, Medicamentos de Apple y MyTherapy)**
+- Una toma tiene tres estados: **Tomada**, **Omitida** (con motivo opcional) y **Sin registrar**.
+- Si una toma de Antonio queda sin registrar 60 minutos, Sofía recibe «Una toma de Antonio está sin registrar». En la pantalla bloqueada no se nombra el medicamento.
+- La medicación «si hace falta» (Paracetamol) no tiene horarios: tiene un botón **Registrar toma**.
+- El aviso de reposición se define en días: «Avisame cuando queden 7 días».
+- **Compartir resumen de medicación** para el médico: plan actual, tomas de las últimas 2 semanas y omitidas con su motivo. Sin conclusiones.
+
+**Turnos (Zocdoc, Doctolib y Doctoralia)** — Nido no reserva turnos; los registra, los recuerda y ayuda a prepararlos.
+- **Registrar turno pegando el mensaje**: desde ＋, la persona pega el SMS o WhatsApp de la mutualista y la IA propone fecha, hora, lugar, especialidad y para quién. Se revisa antes de crear.
+- Aviso el día anterior: «Mañana 10:30 · Consulta de Antonio».
+- La ficha de cada persona separa consultas **Próximas** y **Pasadas**. Cada consulta pasada guarda lo que se cargó después (indicación y estudios).
 
 ## 4. Personas de la demo (datos ficticios)
 
@@ -184,7 +207,8 @@ El detalle de «Consulta medicina general · Antonio · Hoy 10:30» tiene una se
 
 1. **Estudios para llevar**: la lista de estudios pedidos con su estado («Hemograma ✔ adjunto», «Ecocardiograma ✘ falta el resultado») y la acción «Adjuntar desde documentos».
 2. **Preguntas para el médico**: lista editable.
-3. **Logística**: autorización, traslado y acompañante. Incluye el botón conceptual «Solicitar acompañante» (C2).
+3. **Compartir resumen de medicación**: vista previa del resumen y botón para compartirlo.
+4. **Logística**: autorización, traslado y acompañante. Incluye el botón conceptual «Solicitar acompañante» (C2).
 
 Después de la consulta, ofrecé el botón **Cargar lo que indicó el médico**, que entra al recorrido R2.
 
@@ -228,7 +252,9 @@ Rotulalas con un badge «Concepto». Muestran la idea; no hay servicio real.
 
 ## 11. Entregable
 
+- El prototipo tiene que poder exportarse como sitio estático (HTML, CSS y JS, sin servidor) para publicarlo en Vercel.
 - Prototipo clickeable con los recorridos R1 a R5 conectados de punta a punta, las pantallas simples y las conceptuales C1 a C4.
 - Selector «ver como» funcional con Sofía, Antonio, Rosa y Lucía. Cambiar de perfil cambia lo que se ve.
 - Una página inicial de la demo, antes de entrar a la app, con: qué es Nido, los perfiles disponibles y los 5 recorridos sugeridos para probar.
 - Mostrá el sistema visual: colores de las personas, íconos por tipo, tarjeta de actividad en todos sus estados, botones, hojas y *toasts*.
+- Mockups de la **pantalla bloqueada del iPhone** con las notificaciones de Nido: toma con botones, toma sin registrar enviada a Sofía, aviso del día anterior a una consulta y resumen de la mañana.

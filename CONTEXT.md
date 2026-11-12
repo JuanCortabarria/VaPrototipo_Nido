@@ -315,3 +315,5 @@ Decisiones confirmadas por Juan el 12/11. Reemplazan las anteriores que contradi
 - Nuevo prototipo en Claude Design: 4 o 5 recorridos profundos, más pantallas conceptuales de farmacia, acompañante, WhatsApp y gráfica de valores.
 
 Prompt para el nuevo prototipo: `diseno/prompt-claude-design.md`. Para la demo, Fernando pasa a ser pareja de Sofía y papá de Lucía y Mateo, y deja de ser un perfil vacío.
+
+Prototipo v2: se trabaja en la rama `rediseno/prototipo-v2`. El resultado de Claude Design (modelo Fable 5.2) va en `prototype-v2/`, con su propia URL de Vercel; `prototype/` queda intacto para comparar. Referencias de apps (recordatorios, medicamentos y turnos): `diseno/referencias-apps.md`.
