@@ -29,3 +29,60 @@
 .senior-view .event[data-kind="Medicación"] .event-open{background:#654284}
 .senior-view .tag{background:#fff;color:#384653;border:1px solid #8493a2}.senior-view .tag.done{background:#d6efdf;color:#174e2f;border-color:#55976a}.senior-view .tag.warn{background:#fff0c4;color:#644200;border-color:#a18025}
 .senior-view button:focus-visible{outline:4px solid #e4a327;outline-offset:3px}.senior-view button:active{transform:translateY(1px)}
+
+/* Ronda 1 de feedback */
+/* F1: iOS Safari ignores width on native date inputs; reset appearance so both columns align. */
+input[type=date],input[type=time]{-webkit-appearance:none;appearance:none;display:block;width:100%;min-width:0;max-width:100%;min-height:48px;text-align:left;line-height:1.3}
+input[type=date]::-webkit-date-and-time-value,input[type=time]::-webkit-date-and-time-value{text-align:left;margin:0}
+input[type=date]::-webkit-calendar-picker-indicator{margin-left:auto}
+.search-row{display:flex;gap:8px;align-items:stretch;margin:15px 0 4px}.search-row .search{flex:1;min-width:0;margin:0}
+.filter-toggle{flex:none;padding:10px 13px;min-height:48px;font-size:14px;gap:6px}.filter-toggle .icon{width:19px;height:19px}.filter-toggle.has-active{background:#e9eee5;border-color:var(--green)}
+.filter-panel{background:#fff;border:1px solid #e3e6dd;border-radius:16px;padding:2px 14px 14px;margin:10px 0 4px}.filter-panel[hidden]{display:none}
+.date-range{border:0;padding:0;margin:14px 0 0;min-width:0}.date-range legend{font-size:13px;font-weight:700;padding:0;margin-bottom:2px}.date-range label{font-weight:500;color:var(--muted);margin:8px 0 5px}
+.active-filters{display:flex;flex-wrap:wrap;gap:7px;align-items:center;margin:14px 0 0}
+.chip.removable{background:#e9eee5;border-color:#cfd9c9;color:var(--green);font-weight:600;min-height:38px;padding:6px 8px 6px 12px;max-width:100%}.chip.removable .icon{width:16px;height:16px}
+.link-button{background:none;border:0;color:var(--green);text-decoration:underline;font-size:13px;font-weight:600;padding:8px 4px;min-height:44px}
+/* F3 + sticky input: nothing may scroll below the chat box. */
+.main.chat-main{padding-bottom:0}.chat-form{padding:10px 0 14px;margin-top:6px;box-shadow:0 -10px 12px -12px #293b3240;z-index:3}
+.answer-group{margin-top:12px}.answer-group h4{margin:0 0 6px;font-size:11px;letter-spacing:.8px;text-transform:uppercase;color:var(--muted)}
+.answer-item{display:block;width:100%;text-align:left;background:#f4f6f0;border-radius:12px;padding:9px 12px;margin:5px 0;min-height:44px;line-height:1.35}.answer-item strong{display:block;font-size:14px}.answer-item small{display:block;margin-top:2px}
+.answer-more{font-size:13px;margin-top:10px;color:var(--muted)}.answer-more .link-button{min-height:36px;padding:4px 2px}
+.answer-extra{margin-top:6px;border-top:1px solid var(--line)}.answer-extra summary{padding:10px 0;font-size:13px;min-height:40px}
+.answer-ranges{margin:12px -15px 0;padding:0 15px 2px}.answer-ranges .chip{min-height:38px;padding:6px 12px}
+/* F4/F5: medication boxes, identified by expiry. */
+.box-summary{background:#fff;border:1px solid #e3e6dd;border-radius:18px;padding:14px 16px}
+.box-total{font-size:15px;color:var(--muted)}.box-total .quantity{font-size:30px;margin-right:2px}
+.box-summary ul{list-style:none;margin:10px 0 8px;padding:0}.box-summary li{display:flex;justify-content:space-between;gap:12px;padding:7px 0;border-top:1px solid #eff0ea;font-size:14px}.box-summary li span{color:var(--muted)}.box-summary li strong{text-align:right}.box-summary li.alert strong{color:#963d2d;text-align:left}
+.box-list{list-style:none;margin:0;padding:0;background:#fff;border:1px solid #e3e6dd;border-radius:18px}
+.box-row{display:flex;align-items:flex-start;gap:8px;padding:12px 10px 12px 14px;border-top:1px solid #eff0ea}.box-row:first-child{border-top:0}
+.box-info{flex:1;min-width:0;display:flex;flex-direction:column;align-items:flex-start;gap:4px}.box-info strong{font-size:15px}.box-info>span:not(.tag){font-size:13px;color:var(--muted)}.box-row.expired .box-info strong{color:#963d2d}
+.box-info .link-button{min-height:36px;padding:2px 0;font-size:12px}
+.opened-label{color:var(--green)}
+.box-actions{display:flex;gap:4px;flex:none}
+.icon-action{display:inline-flex;align-items:center;justify-content:center;gap:5px;min-width:44px;min-height:44px;padding:0 10px;border-radius:12px;border:1px solid #d9dfd4;background:#fff;color:var(--green);font-size:13px;font-weight:600}
+.icon-action .icon{width:19px;height:19px}.icon-action.danger{color:#a23f30;border-color:#ebc9bf;background:#fdf3f0;padding:0}
+.btn.destructive{background:#a23f30;color:#fff}
+#toast{align-items:center;gap:14px}.toast-action{color:#ffe3a8;font-weight:700;text-decoration:underline;min-height:36px;padding:0 4px;flex:none}
+/* F7: validity table. State never depends only on color: symbol + text in every cell. */
+.validity-summary{display:flex;flex-wrap:wrap;gap:7px;margin:0 0 14px}.validity-count{border-radius:9px;padding:6px 10px;font-size:13px;font-weight:700}
+.validity-wrap{background:#fff;border:1px solid #e3e6dd;border-radius:18px;padding:8px 6px}
+table.validity{width:100%;border-collapse:separate;border-spacing:3px;table-layout:fixed}
+table.validity thead th{font-weight:600;padding:2px 0 6px;vertical-align:bottom}table.validity thead th:first-child{width:31%}
+table.validity tbody th{text-align:left;font-size:12px;font-weight:600;line-height:1.25;padding:4px 4px 4px 6px;overflow-wrap:anywhere}
+table.validity td{padding:0}
+.avatar.small{width:28px;height:28px;font-size:12px}.col-name{display:block;font-size:9px;color:var(--muted);margin-top:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.validity-cell{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;width:100%;min-height:50px;border-radius:10px;padding:3px 1px;border:1px solid transparent;text-align:center;line-height:1.1}
+.validity-cell small{font-size:9.5px;color:inherit;line-height:1.05;max-width:100%;overflow-wrap:anywhere}
+.validity-sym{font-size:16px;font-weight:800}.validity-cell .icon{width:17px;height:17px}
+.validity-cell.ok,.validity-count.ok{background:#e1f1e5;color:#1f6138;border-color:#a9d3b5}
+.validity-cell.soon,.validity-count.soon{background:#fdf0c7;color:#6f5100;border-color:#e2c46a}
+.validity-cell.expired,.validity-count.expired{background:#f9e0da;color:#962f20;border-color:#e3a698}
+.validity-cell.missing,.validity-count.missing{background:#f1f2ee;color:#556157;border:1px dashed #a9b2aa}
+.validity-cell.unknown{background:#f1f2ee;color:#556157;border-color:#c9cfc8}
+.validity-cell.na{background:#f8f7f3;color:#a4aaa3}
+.validity-cell.locked{background:#e9eae6;color:#6a716b}
+.validity-legend{list-style:none;padding:0;margin:14px 0;display:grid;grid-template-columns:1fr 1fr;gap:8px 12px;font-size:12px;color:var(--muted)}.validity-legend li{display:flex;align-items:center;gap:8px}.validity-legend .validity-cell{width:30px;min-height:30px;flex:none}.validity-legend .validity-sym{font-size:13px}
+.validity-note{display:flex;gap:12px;align-items:flex-start;border-radius:14px;padding:12px 14px;margin:14px 0 6px;border:1px solid transparent}.validity-note p{font-size:13px;margin-top:2px}.validity-note .validity-sym{width:26px;text-align:center}
+.validity-note.ok{background:#e1f1e5;color:#1f6138}.validity-note.soon{background:#fdf0c7;color:#6f5100}.validity-note.expired{background:#f9e0da;color:#962f20}.validity-note.unknown{background:#f1f2ee;color:#556157}
+.validity-type{border:1px solid #e1e4db;border-radius:14px;padding:6px 12px 8px;margin:12px 0;background:#fff;min-width:0}.validity-type legend{font-weight:700;font-size:14px;padding:0 4px}.validity-people{display:grid;grid-template-columns:1fr 1fr}.validity-type .check{margin:8px 0}.validity-type .remove{color:#a23f30;font-size:13px;border-top:1px solid #eff0ea;padding-top:8px}
+@media(max-width:374px){table.validity tbody th{font-size:11px}.validity-cell small{font-size:8.5px}}
